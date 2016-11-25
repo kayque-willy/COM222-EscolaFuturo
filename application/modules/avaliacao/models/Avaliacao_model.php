@@ -55,4 +55,17 @@ class Avaliacao_model extends CI_Model{
    return $this->db->get('avaliacao');
   }
   
+  #Lista as questões da prova
+  public function listar_questoes($filtro='') {
+   //Adiciona clausula where
+   if(!empty($filtro['id'])) $this->db->where('avaliacao.id', $filtro['id']);
+    
+   //Consultar inner join
+   $this->db->select('questao.*, avaliacao.*');    
+   $this->db->from('avaliacao_questao');
+   $this->db->join('avaliacao', 'avaliacao_questao.idAvaliacao = avaliacao.id','inner');
+   $this->db->join('questao', 'avaliacao_questao.idQuestao = questao.id','inner');
+   return $this->db->get();
+  } 
+  
 }

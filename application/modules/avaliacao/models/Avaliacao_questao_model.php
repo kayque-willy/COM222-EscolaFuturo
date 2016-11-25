@@ -48,7 +48,11 @@ class Avaliacao_questao_model extends CI_Model{
    //Adiciona clausula where
    if(!empty($filtro['idAvaliacao'])) $this->db->where('idAvaliacao', $filtro['idAvaliacao']);
    if(!empty($filtro['idQuestao'])) $this->db->where('idQuestao', $filtro['idQuestao']);
-   return $this->db->get('avaliacao_questao');
-  }
-  
+   
+   //Consultar inner join
+   $this->db->select('questao.*, avaliacao_questao.idAvaliacao');    
+   $this->db->from('avaliacao_questao');
+   $this->db->join('questao', 'avaliacao_questao.idQuestao = questao.id','inner');
+   return $this->db->get();
+  } 
 }

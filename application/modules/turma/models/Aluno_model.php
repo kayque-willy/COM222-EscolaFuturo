@@ -58,11 +58,12 @@ class Aluno_model extends CI_Model{
   public function listar_turmas($filtro='') {
    //Adiciona clausula where
    if(!empty($filtro['loginAluno'])) $this->db->where('turma_aluno.loginAluno', $filtro['loginAluno']);
-    
+   
    //Consultar inner join
-   $this->db->select('turma_aluno.*, aluno.login as login, aluno.nome as nome');    
+   $this->db->select('turma_aluno.*, disciplina.id as idDisciplina, disciplina.nome as nomeDisciplina, aluno.login as login');    
    $this->db->from('turma_aluno');
    $this->db->join('aluno', 'turma_aluno.loginAluno = aluno.login','inner');
+   $this->db->join('disciplina', 'turma_aluno.idDisciplina = disciplina.id','inner');
    return $this->db->get();
   }
   
