@@ -3,12 +3,16 @@ class Avaliacao_model extends CI_Model{
  
   public $id;
   public $idTurma;
+  public $idDisciplina;
+  public $loginProfessor;
   public $nome;
   
   #Constroi o objeto
-  public function __construct($id='',$idTurma='',$nome=''){
+  public function __construct($id='',$idTurma='',$idDisciplina='',$loginProfessor='',$nome=''){
      if(isset($id)) $this->id=$id;
      if(isset($idTurma)) $this->idTurma=$idTurma;
+     if(isset($idDisciplina)) $this->idDisciplina=$idDisciplina;
+     if(isset($loginProfessor)) $this->loginProfessor=$loginProfessor;
      if(isset($nome)) $this->nome=$nome;
   }
   
@@ -18,6 +22,8 @@ class Avaliacao_model extends CI_Model{
      $data = [];
      if(isset($this->id)) $data['id'] = $this->id;
      if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
+     if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina;
+     if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor;
      if(isset($this->nome)) $data['nome'] = $this->nome;
     
      return $this->db->insert('avaliacao',$data);
@@ -38,6 +44,8 @@ class Avaliacao_model extends CI_Model{
      $data = [];
      if(isset($this->nome)) $data['nome'] = $this->id;
      if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
+     if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina;
+     if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor;
    
      //Cria um vetor com a chave primaria
      $where['id']=$id;
@@ -51,6 +59,8 @@ class Avaliacao_model extends CI_Model{
    //Adiciona clausula where
    if(!empty($filtro['id'])) $this->db->where('id', $filtro['id']);
    if(!empty($filtro['idTurma'])) $this->db->where('idTurma', $filtro['idTurma']);
+   if(!empty($filtro['idDisciplina'])) $this->db->where('idDisciplina', $filtro['idDisciplina']);
+   if(!empty($filtro['loginProfessor'])) $this->db->where('loginProfessor', $filtro['loginProfessor']);
    if(!empty($filtro['nome'])) $this->db->where('nome', $filtro['nome']);
    return $this->db->get('avaliacao');
   }

@@ -2,13 +2,13 @@
 class Turma_model extends CI_Model{
  
   public $id;
-  public $idProfessor;
+  public $loginProfessor;
   public $idDisciplina;
   
   #Constroi o objeto
-  public function __construct($id='',$idProfessor='',$idDisciplina=''){
+  public function __construct($id='',$loginProfessor='',$idDisciplina=''){
      if(isset($id)) $this->id=$id;
-     if(isset($idProfessor)) $this->idProfessor=$idProfessor;
+     if(isset($loginProfessor)) $this->loginProfessor=$loginProfessor;
      if(isset($idDisciplina)) $this->idDisciplina=$idDisciplina;
   }
   
@@ -17,7 +17,7 @@ class Turma_model extends CI_Model{
      //Cria um vetor de valores para inserção
      $data = [];
      if(isset($this->id)) $data['id'] = $this->id;
-     if(isset($this->idProfessor)) $data['idProfessor'] = $this->idProfessor;
+     if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor;
      if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina;
     
      return $this->db->insert('turma',$data);
@@ -37,7 +37,7 @@ class Turma_model extends CI_Model{
      //Cria um vetor de valores para atualização
      $data = [];
      if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->id;
-     if(isset($this->idProfessor)) $data['idProfessor'] = $this->idProfessor;
+     if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor;
    
      //Cria um vetor com a chave primaria
      $where['id']=$id;
@@ -50,7 +50,7 @@ class Turma_model extends CI_Model{
   public function select($filtro='') {
    //Adiciona clausula where
    if(!empty($filtro['id'])) $this->db->where('id', $filtro['id']);
-   if(!empty($filtro['idProfessor'])) $this->db->where('idProfessor', $filtro['idProfessor']);
+   if(!empty($filtro['loginProfessor'])) $this->db->where('loginProfessor', $filtro['loginProfessor']);
    if(!empty($filtro['idDisciplina'])) $this->db->where('idDisciplina', $filtro['idDisciplina']);
    return $this->db->get('turma');
   }

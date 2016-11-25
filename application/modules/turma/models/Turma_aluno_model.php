@@ -4,12 +4,14 @@ class Turma_aluno_model extends CI_Model{
   public $loginAluno;
   public $idTurma;
   public $idDisciplina;
+  public $loginProfessor;
 
   #Constroi o objeto
-  public function __construct($loginAluno='',$idTurma='',$idDisciplina=''){
+  public function __construct($loginAluno='',$idTurma='',$idDisciplina='',$loginProfessor=''){
      if(isset($loginAluno)) $this->loginAluno=$loginAluno;
      if(isset($idTurma)) $this->idTurma=$idTurma;
      if(isset($idDisciplina)) $this->idDisciplina=$idDisciplina;
+     if(isset($loginProfessor)) $this->loginProfessor=$loginProfessor;
   }
   
   #Insere uma nova turma_aluno
@@ -18,14 +20,15 @@ class Turma_aluno_model extends CI_Model{
      //Verifica se o aluno ja esta matriculado em alguma turma da disciplina
      if(isset($this->loginAluno))$this->db->where('loginAluno',$this->loginAluno);
      if(isset($this->idDisciplina)) $this->db->where('idDisciplina', $this->idDisciplina);
-    
+  
      //Se não estiver matriculado, realiza a matricula
      if(empty($this->db->get('turma_aluno')->result())){
         $data = [];
         if(isset($this->loginAluno)) $data['loginAluno'] = $this->loginAluno;
         if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
         if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina; 
-        return $this->db->insert('turma_aluno',$data);
+        if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor; 
+       return $this->db->insert('turma_aluno',$data);
      }else{
        return false;
      } 
@@ -38,6 +41,7 @@ class Turma_aluno_model extends CI_Model{
     if(isset($this->loginAluno)) $data['loginAluno'] = $this->loginAluno;
     if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
     if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina; 
+    if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor; 
     
     return $this->db->delete('turma_aluno',$data);
   }
@@ -49,6 +53,7 @@ class Turma_aluno_model extends CI_Model{
      if(isset($this->loginAluno)) $data['loginAluno'] = $this->loginAluno;
      if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
      if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina; 
+     if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor; 
     
      //Cria um vetor com a chave primaria
      $where['loginAluno']=$loginAluno;
@@ -63,6 +68,7 @@ class Turma_aluno_model extends CI_Model{
    if(!empty($filtro['loginAluno'])) $this->db->where('loginAluno', $filtro['loginAluno']);
    if(!empty($filtro['idTurma'])) $this->db->where('idTurma', $filtro['idTurma']);
    if(!empty($filtro['idDisciplina'])) $this->db->where('idDisciplina', $filtro['idDisciplina']);
+   if(!empty($filtro['loginProfessor'])) $this->db->where('loginProfessor', $filtro['loginProfessor']);
     
    return $this->db->get('turma_aluno');
   }
@@ -72,6 +78,7 @@ class Turma_aluno_model extends CI_Model{
    //Adiciona clausula where
    if(!empty($filtro['idTurma'])) $this->db->where('turma_aluno.idTurma', $filtro['idTurma']);
    if(!empty($filtro['idDisciplina'])) $this->db->where('turma_aluno.idDisciplina', $filtro['idDisciplina']);
+   if(!empty($filtro['loginProfessor'])) $this->db->where('turma_aluno.loginProfessor', $filtro['loginProfessor']); 
    //Consultar inner join
    $this->db->select('turma_aluno.*, aluno.login as login, aluno.nome as nome');    
    $this->db->from('turma_aluno');
