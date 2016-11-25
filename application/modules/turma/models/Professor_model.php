@@ -66,4 +66,20 @@ class Professor_model extends CI_Model{
    return $this->db->get();
   }
   
+  #Lista as notas das turmas
+  public function listar_notas($filtro='') {
+   //Adiciona clausula where
+   if(!empty($filtro['loginAluno'])) $this->db->where('nota.loginAluno', $filtro['loginAluno']);
+   if(!empty($filtro['idTurma'])) $this->db->where('avaliacao.idTurma', $filtro['idTurma']);
+   if(!empty($filtro['idDisciplina'])) $this->db->where('avaliacao.idDisciplina', $filtro['idDisciplina']);
+   if(!empty($filtro['loginProfessor'])) $this->db->where('avaliacao.loginProfessor', $filtro['loginProfessor']);
+    
+   //Consultar inner join
+   $this->db->select('avaliacao.idTurma, avaliacao.idDisciplina, avaliacao.nome, nota.loginAluno, nota.idAvaliacao, nota.nota, aluno.nome as nomeAluno');    
+   $this->db->from('avaliacao');
+   $this->db->join('nota', 'avaliacao.id = nota.idAvaliacao','inner');
+   $this->db->join('aluno', 'aluno.login = nota.loginAluno','inner');
+   return $this->db->get();
+  }
+  
 }

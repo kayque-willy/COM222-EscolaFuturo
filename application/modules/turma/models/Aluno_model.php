@@ -82,7 +82,7 @@ class Aluno_model extends CI_Model{
    return $this->db->get();
   }
   
-  #Lista as turmas do aluno
+  #Lista as notas do aluno
   public function listar_notas($filtro='') {
    //Adiciona clausula where
    if(!empty($filtro['loginAluno'])) $this->db->where('nota.loginAluno', $filtro['loginAluno']);
@@ -110,6 +110,11 @@ class Aluno_model extends CI_Model{
    $this->db->from('avaliacao');
    $this->db->join('nota', 'avaliacao.id = nota.idAvaliacao','inner');
    return $this->db->get();
+  }
+  
+  #Histórico do aluno com as disciplinas e notas 
+  public function historico($filtro=''){
+    
   }
   
 }
