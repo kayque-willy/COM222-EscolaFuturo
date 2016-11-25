@@ -67,4 +67,34 @@ class Aluno_model extends CI_Model{
    return $this->db->get();
   }
   
+  #Lista as turmas do aluno
+  public function listar_notas($filtro='') {
+   //Adiciona clausula where
+   if(!empty($filtro['loginAluno'])) $this->db->where('nota.loginAluno', $filtro['loginAluno']);
+   if(!empty($filtro['idTurma'])) $this->db->where('avaliacao.idTurma', $filtro['idTurma']);
+   if(!empty($filtro['idDisciplina'])) $this->db->where('avaliacao.idDisciplina', $filtro['idDisciplina']);
+   if(!empty($filtro['loginProfessor'])) $this->db->where('avaliacao.loginProfessor', $filtro['loginProfessor']);
+    
+   //Consultar inner join
+   $this->db->select('avaliacao.idTurma, avaliacao.idDisciplina, avaliacao.nome, nota.idAvaliacao, nota.nota');    
+   $this->db->from('avaliacao');
+   $this->db->join('nota', 'avaliacao.id = nota.idAvaliacao','inner');
+   return $this->db->get();
+  }
+  
+  #Calcula a media do aluno
+  public function media($filtro='') {
+   //Adiciona clausula where
+   if(!empty($filtro['loginAluno'])) $this->db->where('nota.loginAluno', $filtro['loginAluno']);
+   if(!empty($filtro['idTurma'])) $this->db->where('avaliacao.idTurma', $filtro['idTurma']);
+   if(!empty($filtro['idDisciplina'])) $this->db->where('avaliacao.idDisciplina', $filtro['idDisciplina']);
+   if(!empty($filtro['loginProfessor'])) $this->db->where('avaliacao.loginProfessor', $filtro['loginProfessor']);
+    
+   //Consultar inner join
+   $this->db->select('avg(nota.nota) as media');    
+   $this->db->from('avaliacao');
+   $this->db->join('nota', 'avaliacao.id = nota.idAvaliacao','inner');
+   return $this->db->get();
+  }
+  
 }

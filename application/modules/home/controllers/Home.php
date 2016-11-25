@@ -8,8 +8,10 @@ class Home extends CI_Controller {
 		
 		$aluno_model = new Aluno_model();
 		
-		$filtro['loginAluno']='joao@email.com';
-		var_dump($aluno_model->listar_turmas($filtro)->result());
+		$filtro['loginAluno']='aluno@email.com';
+		var_dump($aluno_model->listar_notas($filtro)->result());
+		
+		var_dump($aluno_model->media($filtro)->result());
 		
 		//$this->load->view('layout/header');
 		//$this->load->view('home/welcome_message');
