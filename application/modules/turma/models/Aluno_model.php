@@ -67,6 +67,21 @@ class Aluno_model extends CI_Model{
    return $this->db->get();
   }
   
+  #Lista as provas feitas ou não feitas pelo aluno
+  public function listar_provas($filtro='') {
+   //Adiciona clausula where
+   if(!empty($filtro['loginAluno'])) $this->db->join('nota', 'avaliacao.id = nota.idAvaliacao and nota.loginAluno="'.$filtro['loginAluno'].'" ','left');
+   if(!empty($filtro['idTurma'])) $this->db->where('avaliacao.idTurma', $filtro['idTurma']);
+   if(!empty($filtro['idDisciplina'])) $this->db->where('avaliacao.idDisciplina', $filtro['idDisciplina']);
+   if(!empty($filtro['loginProfessor'])) $this->db->where('avaliacao.loginProfessor', $filtro['loginProfessor']);
+   if(!empty($filtro['provaAfazer'])) $this->db->where('nota.nota is null',null,false);
+    
+    //Consultar inner join
+   $this->db->select('avaliacao.*,nota.loginAluno,nota.nota');    
+   $this->db->from('avaliacao');
+   return $this->db->get();
+  }
+  
   #Lista as turmas do aluno
   public function listar_notas($filtro='') {
    //Adiciona clausula where
