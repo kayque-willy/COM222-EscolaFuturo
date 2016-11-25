@@ -54,4 +54,16 @@ class Professor_model extends CI_Model{
    return $this->db->get('professor');
   }
   
+  #Lista as turmas do professor
+  public function listar_turmas($filtro='') {
+   //Adiciona clausula where
+   if(!empty($filtro['loginProfessor'])) $this->db->where('turma.loginProfessor', $filtro['loginProfessor']);
+    
+   //Consultar inner join
+   $this->db->select('turma.*, professor.login as login, professor.nome as nome');    
+   $this->db->from('turma');
+   $this->db->join('professor', 'turma.loginProfessor = professor.login','inner');
+   return $this->db->get();
+  }
+  
 }
