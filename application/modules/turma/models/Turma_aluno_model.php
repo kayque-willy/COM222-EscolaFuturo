@@ -6,7 +6,7 @@ class Turma_aluno_model extends CI_Model{
   public $idDisciplina;
 
   #Constroi o objeto
-  public function __construct($loginAluno='',$idTurma=''){
+  public function __construct($loginAluno='',$idTurma='',$idDisciplina=''){
      if(isset($loginAluno)) $this->loginAluno=$loginAluno;
      if(isset($idTurma)) $this->idTurma=$idTurma;
      if(isset($idDisciplina)) $this->idDisciplina=$idDisciplina;
@@ -15,12 +15,20 @@ class Turma_aluno_model extends CI_Model{
   #Insere uma nova turma_aluno
   public function insert(){
      //Cria um vetor de valores para inserção
-     $data = [];
-     if(isset($this->loginAluno)) $data['loginAluno'] = $this->loginAluno;
-     if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
-     if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina; 
+     //Verifica se o aluno ja esta matriculado em alguma turma da disciplina
+     if(isset($this->loginAluno))$this->db->where('loginAluno',$this->loginAluno);
+     if(isset($this->idDisciplina)) $this->db->where('idDisciplina', $this->idDisciplina);
     
-     return $this->db->insert('turma_aluno',$data);
+     //Se não estiver matriculado, realiza a matricula
+     if(empty($this->db->get('turma_aluno')->result())){
+        $data = [];
+        if(isset($this->loginAluno)) $data['loginAluno'] = $this->loginAluno;
+        if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
+        if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina; 
+        return $this->db->insert('turma_aluno',$data);
+     }else{
+       return false;
+     } 
   }
   
   #Desativa uma turma_aluno de acordo com a chave primária
