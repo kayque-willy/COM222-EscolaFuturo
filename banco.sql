@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 25-Nov-2016 às 16:30
+-- Data de Criação: 25-Nov-2016 às 18:13
 -- Versão do servidor: 5.5.38-0ubuntu0.14.04.1
 -- versão do PHP: 5.5.9-1ubuntu4.5
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
   KEY `avaliacao_disciplina_fk` (`idDisciplina`),
   KEY `avaliacao_turma_fk` (`idTurma`),
   KEY `avaliacao_professor_fk` (`loginProfessor`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Extraindo dados da tabela `avaliacao`
@@ -69,7 +69,9 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
 
 INSERT INTO `avaliacao` (`id`, `idTurma`, `idDisciplina`, `loginProfessor`, `nome`) VALUES
 (1, 'Turma A', 'com220', 'admin@email.com', 'Prova 1'),
-(2, 'Turma A', 'com220', 'admin@email.com', 'Prova 2');
+(2, 'Turma A', 'com220', 'admin@email.com', 'Prova 2'),
+(3, 'Turma A', 'com220', 'admin@email.com', 'Prova 3'),
+(4, 'Turma A', 'com222', 'admin@email.com', 'Prova 1');
 
 -- --------------------------------------------------------
 
@@ -135,6 +137,7 @@ CREATE TABLE IF NOT EXISTS `nota` (
 
 INSERT INTO `nota` (`loginAluno`, `idAvaliacao`, `nota`) VALUES
 ('aluno@email.com', 1, 8),
+('aluno@email.com', 2, 5),
 ('joao@email.com', 1, 9);
 
 -- --------------------------------------------------------
@@ -265,8 +268,8 @@ ALTER TABLE `avaliacao_questao`
 -- Limitadores para a tabela `nota`
 --
 ALTER TABLE `nota`
-  ADD CONSTRAINT `avaliacao_nota_fk` FOREIGN KEY (`idAvaliacao`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `aluno_avaliacao_fk` FOREIGN KEY (`loginAluno`) REFERENCES `aluno` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `aluno_avaliacao_fk` FOREIGN KEY (`loginAluno`) REFERENCES `aluno` (`login`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `avaliacao_nota_fk` FOREIGN KEY (`idAvaliacao`) REFERENCES `avaliacao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Limitadores para a tabela `questao`
@@ -285,9 +288,9 @@ ALTER TABLE `turma`
 -- Limitadores para a tabela `turma_aluno`
 --
 ALTER TABLE `turma_aluno`
-  ADD CONSTRAINT `turma_aluno_ibfk_1` FOREIGN KEY (`loginProfessor`) REFERENCES `turma` (`loginProfessor`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `aluno_turma_aluno_fk` FOREIGN KEY (`loginAluno`) REFERENCES `aluno` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `disciplina_turma_aluno_fk` FOREIGN KEY (`idDisciplina`) REFERENCES `turma` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `turma_aluno_ibfk_1` FOREIGN KEY (`loginProfessor`) REFERENCES `turma` (`loginProfessor`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `turma_turma_aluno_fk` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
