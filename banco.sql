@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 25-Nov-2016 às 12:01
+-- Data de Criação: 25-Nov-2016 às 16:30
 -- Versão do servidor: 5.5.38-0ubuntu0.14.04.1
 -- versão do PHP: 5.5.9-1ubuntu4.5
 
@@ -54,18 +54,22 @@ DROP TABLE IF EXISTS `avaliacao`;
 CREATE TABLE IF NOT EXISTS `avaliacao` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idTurma` varchar(255) NOT NULL,
+  `idDisciplina` varchar(255) NOT NULL,
+  `loginProfessor` varchar(255) NOT NULL,
   `nome` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `turma_avaliacao_fk` (`idTurma`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+  KEY `avaliacao_disciplina_fk` (`idDisciplina`),
+  KEY `avaliacao_turma_fk` (`idTurma`),
+  KEY `avaliacao_professor_fk` (`loginProfessor`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Extraindo dados da tabela `avaliacao`
 --
 
-INSERT INTO `avaliacao` (`id`, `idTurma`, `nome`) VALUES
-(1, 'Turma A', 'Prova 1'),
-(2, 'Turma A', 'Prova 2');
+INSERT INTO `avaliacao` (`id`, `idTurma`, `idDisciplina`, `loginProfessor`, `nome`) VALUES
+(1, 'Turma A', 'com220', 'admin@email.com', 'Prova 1'),
+(2, 'Turma A', 'com220', 'admin@email.com', 'Prova 2');
 
 -- --------------------------------------------------------
 
@@ -130,8 +134,8 @@ CREATE TABLE IF NOT EXISTS `nota` (
 --
 
 INSERT INTO `nota` (`loginAluno`, `idAvaliacao`, `nota`) VALUES
-('aluno@email.com', 1, 7),
-('aluno@email.com', 2, 8);
+('aluno@email.com', 1, 8),
+('joao@email.com', 1, 9);
 
 -- --------------------------------------------------------
 
@@ -163,7 +167,7 @@ INSERT INTO `professor` (`login`, `senha`, `nome`) VALUES
 
 DROP TABLE IF EXISTS `questao`;
 CREATE TABLE IF NOT EXISTS `questao` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idDisciplina` varchar(255) NOT NULL,
   `enunciado` text NOT NULL,
   `r1` varchar(255) NOT NULL,
@@ -173,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `questao` (
   `repostaCerta` varchar(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `disciplina_questao_fk` (`idDisciplina`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Extraindo dados da tabela `questao`
@@ -181,7 +185,8 @@ CREATE TABLE IF NOT EXISTS `questao` (
 
 INSERT INTO `questao` (`id`, `idDisciplina`, `enunciado`, `r1`, `r2`, `r3`, `r4`, `repostaCerta`) VALUES
 (1, 'com222', 'Qual dessas linguagens é é utilizada pelo protocolo HTTP e executada no navegador?', 'HTML', 'Delphi', 'Assembly', 'Pascal', 'r1'),
-(2, 'com222', 'Qual o componente Java é utilizado para processar as requisições ao servidor?', 'Java Servlet', 'Java Groups', 'Java Toolkit', 'JavaScript', 'r1');
+(2, 'com222', 'Qual o componente Java é utilizado para processar as requisições ao servidor?', 'Java Servlet', 'Java Groups', 'Java Toolkit', 'JavaScript', 'r1'),
+(3, 'com222', 'O que corresponde a variavel $_SESSION em PHP?', 'Variável de sessão', 'Variável local', 'Variável variante', 'Constante', 'r1');
 
 -- --------------------------------------------------------
 
@@ -220,18 +225,22 @@ CREATE TABLE IF NOT EXISTS `turma_aluno` (
   `loginAluno` varchar(255) NOT NULL,
   `idTurma` varchar(255) NOT NULL,
   `idDisciplina` varchar(255) NOT NULL,
-  PRIMARY KEY (`loginAluno`,`idTurma`,`idDisciplina`),
+  `loginProfessor` varchar(255) NOT NULL,
+  PRIMARY KEY (`loginAluno`,`idTurma`,`idDisciplina`,`loginProfessor`),
   KEY `turma_turma_aluno_fk` (`idTurma`),
-  KEY `idDisciplina` (`idDisciplina`)
+  KEY `idDisciplina` (`idDisciplina`),
+  KEY `loginProfessor` (`loginProfessor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `turma_aluno`
 --
 
-INSERT INTO `turma_aluno` (`loginAluno`, `idTurma`, `idDisciplina`) VALUES
-('aluno@email.com', 'Turma A', 'com222'),
-('joao@email.com', 'Turma A', 'com222');
+INSERT INTO `turma_aluno` (`loginAluno`, `idTurma`, `idDisciplina`, `loginProfessor`) VALUES
+('aluno@email.com', 'Turma A', 'com220', 'admin@email.com'),
+('joao@email.com', 'Turma A', 'com220', 'admin@email.com'),
+('joao@email.com', 'Turma A', 'com222', 'admin@email.com'),
+('aluno@email.com', 'Turma B', 'com222', 'admin@email.com');
 
 --
 -- Constraints for dumped tables
@@ -241,7 +250,9 @@ INSERT INTO `turma_aluno` (`loginAluno`, `idTurma`, `idDisciplina`) VALUES
 -- Limitadores para a tabela `avaliacao`
 --
 ALTER TABLE `avaliacao`
-  ADD CONSTRAINT `turma_avaliacao_fk` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `avaliacao_ibfk_1` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `avaliacao_ibfk_2` FOREIGN KEY (`idDisciplina`) REFERENCES `turma` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `avaliacao_ibfk_3` FOREIGN KEY (`loginProfessor`) REFERENCES `turma` (`loginProfessor`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `avaliacao_questao`
@@ -254,8 +265,8 @@ ALTER TABLE `avaliacao_questao`
 -- Limitadores para a tabela `nota`
 --
 ALTER TABLE `nota`
-  ADD CONSTRAINT `aluno_avaliacao_fk` FOREIGN KEY (`loginAluno`) REFERENCES `aluno` (`login`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `avaliacao_nota_fk` FOREIGN KEY (`idAvaliacao`) REFERENCES `avaliacao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `avaliacao_nota_fk` FOREIGN KEY (`idAvaliacao`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `aluno_avaliacao_fk` FOREIGN KEY (`loginAluno`) REFERENCES `aluno` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `questao`
@@ -274,6 +285,7 @@ ALTER TABLE `turma`
 -- Limitadores para a tabela `turma_aluno`
 --
 ALTER TABLE `turma_aluno`
+  ADD CONSTRAINT `turma_aluno_ibfk_1` FOREIGN KEY (`loginProfessor`) REFERENCES `turma` (`loginProfessor`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `aluno_turma_aluno_fk` FOREIGN KEY (`loginAluno`) REFERENCES `aluno` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `disciplina_turma_aluno_fk` FOREIGN KEY (`idDisciplina`) REFERENCES `turma` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `turma_turma_aluno_fk` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
