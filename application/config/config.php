@@ -35,7 +35,7 @@ $config['base_url'] = 'https://projeto-COM222-kayque-willy260077.codeanyapp.com/
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /*
 |--------------------------------------------------------------------------
