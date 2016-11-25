@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 24-Nov-2016 às 18:43
+-- Data de Criação: 25-Nov-2016 às 12:01
 -- Versão do servidor: 5.5.38-0ubuntu0.14.04.1
 -- versão do PHP: 5.5.9-1ubuntu4.5
 
@@ -65,8 +65,7 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
 
 INSERT INTO `avaliacao` (`id`, `idTurma`, `nome`) VALUES
 (1, 'Turma A', 'Prova 1'),
-(2, 'Turma A', 'Prova 2'),
-(4, 'Turma B', 'Prova 1');
+(2, 'Turma A', 'Prova 2');
 
 -- --------------------------------------------------------
 
@@ -195,7 +194,7 @@ CREATE TABLE IF NOT EXISTS `turma` (
   `id` varchar(255) NOT NULL,
   `loginProfessor` varchar(255) NOT NULL,
   `idDisciplina` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`,`idDisciplina`,`loginProfessor`),
   KEY `disciplina_turma_fk` (`idDisciplina`),
   KEY `professor_turma_fk` (`loginProfessor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -205,6 +204,8 @@ CREATE TABLE IF NOT EXISTS `turma` (
 --
 
 INSERT INTO `turma` (`id`, `loginProfessor`, `idDisciplina`) VALUES
+('Turma A', 'admin@email.com', 'com220'),
+('Turma A', 'professor@email.com', 'com220'),
 ('Turma A', 'admin@email.com', 'com222'),
 ('Turma B', 'admin@email.com', 'com222');
 
@@ -218,18 +219,19 @@ DROP TABLE IF EXISTS `turma_aluno`;
 CREATE TABLE IF NOT EXISTS `turma_aluno` (
   `loginAluno` varchar(255) NOT NULL,
   `idTurma` varchar(255) NOT NULL,
-  PRIMARY KEY (`loginAluno`,`idTurma`),
-  KEY `turma_turma_aluno_fk` (`idTurma`)
+  `idDisciplina` varchar(255) NOT NULL,
+  PRIMARY KEY (`loginAluno`,`idTurma`,`idDisciplina`),
+  KEY `turma_turma_aluno_fk` (`idTurma`),
+  KEY `idDisciplina` (`idDisciplina`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `turma_aluno`
 --
 
-INSERT INTO `turma_aluno` (`loginAluno`, `idTurma`) VALUES
-('aluno@email.com', 'Turma A'),
-('joao@email.com', 'Turma A'),
-('aluno@email.com', 'Turma B');
+INSERT INTO `turma_aluno` (`loginAluno`, `idTurma`, `idDisciplina`) VALUES
+('aluno@email.com', 'Turma A', 'com222'),
+('joao@email.com', 'Turma A', 'com222');
 
 --
 -- Constraints for dumped tables
@@ -239,7 +241,7 @@ INSERT INTO `turma_aluno` (`loginAluno`, `idTurma`) VALUES
 -- Limitadores para a tabela `avaliacao`
 --
 ALTER TABLE `avaliacao`
-  ADD CONSTRAINT `turma_avaliacao_fk` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `turma_avaliacao_fk` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `avaliacao_questao`
@@ -273,6 +275,7 @@ ALTER TABLE `turma`
 --
 ALTER TABLE `turma_aluno`
   ADD CONSTRAINT `aluno_turma_aluno_fk` FOREIGN KEY (`loginAluno`) REFERENCES `aluno` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `disciplina_turma_aluno_fk` FOREIGN KEY (`idDisciplina`) REFERENCES `turma` (`idDisciplina`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `turma_turma_aluno_fk` FOREIGN KEY (`idTurma`) REFERENCES `turma` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
