@@ -6,8 +6,8 @@
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- Navibar -->
-	<link rel="stylesheet" href="<?php echo base_url() . 'assets/css/side.css' ?>">
-	<script src="<?php echo base_url() . 'assets/js/side.js' ?>"></script>
+	<link rel="stylesheet" href="/assets/css/side.css">
+	<script src="/assets/js/side.js"></script>
 	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<!-- Latest compiled JavaScript -->
