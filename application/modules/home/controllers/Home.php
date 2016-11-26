@@ -9,10 +9,7 @@ class Home extends CI_Controller {
 		$aluno_model = new Aluno_model();
 		
 		$filtro['loginAluno']='aluno@email.com';
-		$filtro['idTurma']='Turma A';
-		$filtro['idDisciplina']='com220';
-		$filtro['loginProfessor']='admin@email.com';
-		var_dump($aluno_model->listar_provas($filtro)->result());
+		var_dump($aluno_model->historico($filtro)->result());
 		
 		var_dump($this->db->last_query()); 
 		

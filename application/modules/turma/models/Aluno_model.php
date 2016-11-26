@@ -114,7 +114,14 @@ class Aluno_model extends CI_Model{
   
   #Histórico do aluno com as disciplinas e notas 
   public function historico($filtro=''){
+    if(!empty($filtro['loginAluno'])) $this->db->join('avaliacao', 'avaliacao.id = nota.idAvaliacao and nota.loginAluno="'.$filtro['loginAluno'].'" ','inner');
     
+    //Iner join com Nota, Avaliação de Disciplina
+    //Consultar inner join
+    $this->db->select('avg(nota.nota) as media, nota.loginAluno, avaliacao.idDisciplina ');    
+    $this->db->from('nota');
+    
+    $this->db->group_by('avaliacao.idDisciplina'); 
+    return $this->db->get();
   }
-  
 }
