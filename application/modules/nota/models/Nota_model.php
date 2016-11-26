@@ -23,13 +23,18 @@ class Nota_model extends CI_Model{
      return $this->db->insert('nota',$data);
   }
   
-  #Remove um nota de acordo com a chave primária
-  public function remove() {
-    //Cria um vetor de valores para atualização
-    $data = [];
-    if(isset($this->codigo)) $data['loginAluno'] = $this->codigo;
-  
-    return $this->db->delete('nota',$data);
+  #Atualiza a nota a partir da chave primaria
+  public function update ($loginAluno='',$idAvaliacao='') {
+     //Cria um vetor de valores para atualização
+     $data = [];
+     if(isset($this->nota)) $data['nota'] = $this->nota;
+     
+     //Cria um vetor com a chave primaria
+     $where['loginAluno']=$loginAluno;
+     $where['idAvaliacao']=$idAvaliacao;
+     
+     //$this->db->update(nome da tabela,valores de atualização,referência)
+     return $this->db->update('nota',$data,$where);
   }
   
   #Retorna o nota

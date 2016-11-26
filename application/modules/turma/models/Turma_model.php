@@ -28,12 +28,14 @@ class Turma_model extends CI_Model{
    //Cria um vetor de valores para atualização
     $data = [];
     if(isset($this->id)) $data['id'] = $this->id;
-  
+    if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor;
+    if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina;
+    
     return $this->db->delete('turma',$data);
   }
  
   #Atualiza o objeto a partir da chave primaria
-  public function update ($id='') {
+  public function update ($id='',$loginProfessor='',$idDisciplina='') {
      //Cria um vetor de valores para atualização
      $data = [];
      if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->id;
@@ -41,6 +43,8 @@ class Turma_model extends CI_Model{
    
      //Cria um vetor com a chave primaria
      $where['id']=$id;
+     $where['loginProfessor']=$loginProfessor;
+     $where['idDisciplina']=$idDisciplina;
      
      //$this->db->update(idDisciplina da tabela,valores de atualização,referência)
      return $this->db->update('turma',$data,$where);

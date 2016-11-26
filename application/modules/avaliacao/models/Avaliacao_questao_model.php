@@ -34,7 +34,8 @@ class Avaliacao_questao_model extends CI_Model{
      //Cria um vetor de valores para atualização
      $data = [];
      if(isset($this->idQuestao)) $data['idQuestao'] = $this->idQuestao;
-   
+     if(isset($this->idAvaliacao)) $data['idAvaliacao'] = $this->idAvaliacao;
+    
      //Cria um vetor com a chave primaria
      $where['idAvaliacao']=$idAvaliacao;
      $where['idQuestao']=$idQuestao;
