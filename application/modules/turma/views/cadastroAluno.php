@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Sucesso</title>
+	<title>Cadastro de Alunos</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- Navibar -->
@@ -87,9 +87,42 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2">
-						
-						<h3 style="color: green;">Cadastro Efetuado com Sucesso!!</h3>
-						
+						<h1>Cadastro de Alunos</h1>
+						<form action="cadastrarAluno" method="post">
+							<div class="form-group">
+								<label for="nome">Nome do Aluno:</label>
+								<input type="text" class="form-control" id="nome" name="nome">
+							</div>
+							<div class="form-group">
+								<label for="login">Login (E-mail):</label>
+								<input type="text" class="form-control" id="login" name="login">
+							</div>
+							<div class="form-group">
+								<label for="senha">Senha:</label>
+								<input type="password" class="form-control" id="senha" name="senha">
+							</div>
+							<button type="submit" class="btn btn-default">Cadastrar</button>
+						</form>
+					</div>
+					<div class="col-lg-8 col-lg-offset-2">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>NOME</th>
+									<th>LOGIN</th>
+									<th>AÇÕES</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($alunos as $row) { ?>
+								<tr>
+									<td><?php echo $row['nome']?></td>
+									<td><?php echo $row['login']?></td>
+									<td>Excluir, Editar</td>
+								</tr>
+								<?php } ?>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>

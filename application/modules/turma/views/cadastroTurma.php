@@ -69,9 +69,9 @@ $(document).ready(function () {
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gerenciamento de Turmas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class="dropdown-header">Opções</li>
-						<li><a href="#">Alunos</a></li>
+						<li><a href="<?php echo base_url('turma/aluno') ?>">Alunos</a></li>
 						<li><a href="<?php echo base_url('turma/disciplina') ?>">Disciplinas</a></li>
-						<li><a href="#">Professores</a></li>
+						<li><a href="<?php echo base_url('turma/professor') ?>">Professores</a></li>
 						<li><a href="<?php echo base_url('turma') ?>">Turmas</a></li>
 					</ul>
 				</li>
@@ -90,17 +90,38 @@ $(document).ready(function () {
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2">
 						<h1>Cadastro de Turmas</h1>
-						<form action="" method="post">
+						<form action="cadastrarDisciplina" method="post">
 							<div class="form-group">
-								<label for="email">Email address:</label>
-								<input type="email" class="form-control" id="email">
+								<label for="id">Código da Disciplina:</label>
+								<input type="id" class="form-control" id="id" name="id">
 							</div>
 							<div class="form-group">
-								<label for="pwd">Password:</label>
-								<input type="password" class="form-control" id="pwd">
+								<label for="nome">Nome da Disciplina:</label>
+								<input type="nome" class="form-control" id="nome" name="nome">
 							</div>
 							<button type="submit" class="btn btn-default">Cadastrar</button>
 						</form>
+					</div>
+					<div class="col-lg-8 col-lg-offset-2">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>CÓDIGO</th>
+									<th>NOME</th>
+									<th>AÇÕES</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($disciplinas as $row) { ?>
+								<tr>
+									<td><?php echo $row['id']?></td>
+									<td><?php echo $row['nome']?></td>
+									<td>Excluir, Editar</td>
+								</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+					</div>
 					</div>
 				</div>
 			</div>

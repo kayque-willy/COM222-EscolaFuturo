@@ -6,7 +6,19 @@ class Turma extends CI_Controller {
 	#Index do controller
 	public function index() {
 		 $this->load->model('Turma_model');
-	   $this->load->view('turma/cadastroTurma');
+		 $consulta = new Turma_model();
+		 $turmas = $consulta->select($filtro = '');
+		 $data['turmas'] = $turmas->result_array();
+		 $consulta = new Professor_model();
+		 $professores = $consulta->select($filtro = '');
+		 $data['professores'] = $professores->result_array();
+		 $consulta = new Disciplina_model();
+		 $disciplinas = $consulta->select($filtro = '');
+		 $data['disciplinas'] = $disciplinas->result_array();
+		 $consulta = new Aluno_model();
+		 $alunos = $consulta->select($filtro = '');
+		 $data['alunos'] = $alunos->result_array();
+	   $this->load->view('turma/cadastroTurma', $data);
 	 }
 	
 	public function disciplina() {
@@ -17,8 +29,23 @@ class Turma extends CI_Controller {
 	   $this->load->view('turma/cadastroDisciplina', $data);
 	 }
 	
+	public function professor() {
+		 $this->load->model('Professor_model');
+		 $consulta = new Professor_model();
+		 $professores = $consulta->select($filtro = '');
+		 $data['professores'] = $professores->result_array();
+	   $this->load->view('turma/cadastroProfessor', $data);
+	 }
 	
-	#Cria um novo repasse
+	public function aluno() {
+		 $this->load->model('Aluno_model');
+		 $consulta = new Aluno_model();
+		 $alunos = $consulta->select($filtro = '');
+		 $data['alunos'] = $alunos->result_array();
+	   $this->load->view('turma/cadastroAluno', $data);
+	 }
+	
+	#Cria um nova Disciplina
 	public function cadastrarDisciplina(){
 		
 		//Restrição de acesso
@@ -38,6 +65,99 @@ class Turma extends CI_Controller {
 			
 			//Insere o repasse no banco
 			if($disciplina->insert()){
+				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
+				$this->load->view('turma/sucesso');
+			}else{
+				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
+				$this->load->view('turma/falha');
+			}
+		}
+		
+	}
+	
+	#Cria um nova Professor
+	public function cadastrarProfessor(){
+		
+		//Restrição de acesso
+		//if(($_SESSION['tipo']!='Administrativo') and ($_SESSION['tipo']!='Gestor de Projetos')) redirect('/projeto/', 'refresh');
+		
+		if(!empty($_POST)){
+			
+			//Recebe os dados do formulario
+			$login = (empty($_POST['login'])) ? '' : $_POST['login'];
+			$nome = (empty($_POST['nome'])) ? '' : $_POST['nome'];
+			$senha = (empty($_POST['senha'])) ? '' : $_POST['senha'];
+						
+			//Carrega a model
+			$this->load->model('Professor_model');
+		
+			//Cria um nova disciplina com os dados do POST
+			$professor = new Professor_model($login, $senha, $nome);
+			
+			//Insere o repasse no banco
+			if($professor->insert()){
+				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
+				$this->load->view('turma/sucesso');
+			}else{
+				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
+				$this->load->view('turma/falha');
+			}
+		}
+		
+	}
+	
+	#Cria um nova Aluno
+	public function cadastrarAluno(){
+		
+		//Restrição de acesso
+		//if(($_SESSION['tipo']!='Administrativo') and ($_SESSION['tipo']!='Gestor de Projetos')) redirect('/projeto/', 'refresh');
+		
+		if(!empty($_POST)){
+			
+			//Recebe os dados do formulario
+			$login = (empty($_POST['login'])) ? '' : $_POST['login'];
+			$nome = (empty($_POST['nome'])) ? '' : $_POST['nome'];
+			$senha = (empty($_POST['senha'])) ? '' : $_POST['senha'];
+						
+			//Carrega a model
+			$this->load->model('Aluno_model');
+		
+			//Cria um nova disciplina com os dados do POST
+			$aluno = new Aluno_model($login, $senha, $nome);
+			
+			//Insere o repasse no banco
+			if($aluno->insert()){
+				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
+				$this->load->view('turma/sucesso');
+			}else{
+				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
+				$this->load->view('turma/falha');
+			}
+		}
+		
+	}
+	
+	#Cria um nova Turma
+	public function cadastrarTurma(){
+		
+		//Restrição de acesso
+		//if(($_SESSION['tipo']!='Administrativo') and ($_SESSION['tipo']!='Gestor de Projetos')) redirect('/projeto/', 'refresh');
+		
+		if(!empty($_POST)){
+			
+			//Recebe os dados do formulario
+			$login = (empty($_POST['login'])) ? '' : $_POST['login'];
+			$nome = (empty($_POST['nome'])) ? '' : $_POST['nome'];
+			$senha = (empty($_POST['senha'])) ? '' : $_POST['senha'];
+						
+			//Carrega a model
+			$this->load->model('Professor_model');
+		
+			//Cria um nova disciplina com os dados do POST
+			$professor = new Professor_model($login, $senha, $nome);
+			
+			//Insere o repasse no banco
+			if($professor->insert()){
 				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
 				$this->load->view('turma/sucesso');
 			}else{

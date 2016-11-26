@@ -18,7 +18,18 @@
 													<h2 class="text-center"  style=" color: white; text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Login</h2>
 											</div>
 									</div>
-								<!--Cabeçalho -->  
+								<!--Cabeçalho -->
+							 <!-- Mensagem -->
+								<?php if (isset($msg)){ ?>
+								<div class="col-md-offset-3 col-md-6 alert alert-danger">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										<h3 class="text-center text-danger">Falha ao realizar o login!</h3>
+										<p  class="text-center">
+												<?php echo $msg; ?>
+										</p>
+								</div>
+								<?php } ?>
+								<!-- Mensagem -->
                 <div class="row"> 
                     <div class="col-md-offset-3 col-md-6">
 									 		<!--Formulario de login -->
@@ -27,14 +38,14 @@
                             <label class="control-label"></label>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon"></span>
-                                <input type="text" class="form-control" name="login" value="" placeholder="Email">
+                                <input type="text" class="form-control" name="login" value="" placeholder="Email" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label"></label>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon"></span>
-                                <input type="password"  name="senha" class="form-control" placeholder="Senha">
+                                <input type="password"  name="senha" class="form-control" placeholder="Senha" required>
                             </div>
                         </div>
 											  <div class="form-group">
@@ -43,12 +54,12 @@
 														<div class="radio">
 															<label style=" color: white; text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
 																<input type="radio" name="tipoUsuario" value="professor"
-																checked="">Professor</label>
+																checked="" required>Professor</label>
 														</div>
 														<div class="radio">
 															<label style=" color: white; text-shadow: 1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
 																<input type="radio" name="tipoUsuario"  value="aluno"
-																checked="">Aluno</label>
+																checked="" required>Aluno</label>
 														</div>
 													</div>
 												</div>

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Cadastro de Disciplina</title>
+	<title>Falha</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<!-- Navibar -->
@@ -67,9 +67,9 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gerenciamento de Turmas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class="dropdown-header">Opções</li>
-						<li><a href="#">Alunos</a></li>
+						<li><a href="<?php echo base_url('turma/aluno') ?>">Alunos</a></li>
 						<li><a href="<?php echo base_url('turma/disciplina') ?>">Disciplinas</a></li>
-						<li><a href="#">Professores</a></li>
+						<li><a href="<?php echo base_url('turma/professor') ?>">Professores</a></li>
 						<li><a href="<?php echo base_url('turma') ?>">Turmas</a></li>
 					</ul>
 				</li>

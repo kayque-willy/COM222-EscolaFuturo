@@ -67,9 +67,9 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gerenciamento de Turmas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class="dropdown-header">Opções</li>
-						<li><a href="#">Alunos</a></li>
+						<li><a href="<?php echo base_url('turma/aluno') ?>">Alunos</a></li>
 						<li><a href="<?php echo base_url('turma/disciplina') ?>">Disciplinas</a></li>
-						<li><a href="#">Professores</a></li>
+						<li><a href="<?php echo base_url('turma/professor') ?>">Professores</a></li>
 						<li><a href="<?php echo base_url('turma') ?>">Turmas</a></li>
 					</ul>
 				</li>
@@ -91,7 +91,7 @@
 						<form action="cadastrarDisciplina" method="post">
 							<div class="form-group">
 								<label for="id">Código da Disciplina:</label>
-								<input type="id" class="form-control" id="id" name="nome">
+								<input type="id" class="form-control" id="id" name="id">
 							</div>
 							<div class="form-group">
 								<label for="nome">Nome da Disciplina:</label>
@@ -101,7 +101,6 @@
 						</form>
 					</div>
 					<div class="col-lg-8 col-lg-offset-2">
-						<?php echo($disciplinas);?>
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -111,11 +110,13 @@
 								</tr>
 							</thead>
 							<tbody>
+								<?php foreach ($disciplinas as $row) { ?>
 								<tr>
-									<td>John</td>
-									<td>Doe</td>
-									<td>john@example.com</td>
+									<td><?php echo $row['id']?></td>
+									<td><?php echo $row['nome']?></td>
+									<td>Excluir, Editar</td>
 								</tr>
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>

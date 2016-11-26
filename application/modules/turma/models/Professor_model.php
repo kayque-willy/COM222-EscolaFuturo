@@ -51,6 +51,7 @@ class Professor_model extends CI_Model{
    //Adiciona clausula where
    if(!empty($filtro['login'])) $this->db->where('login', $filtro['login']);
    if(!empty($filtro['nome'])) $this->db->where('nome', $filtro['nome']);
+   if(!empty($filtro['senha'])) $this->db->where('senha', $filtro['senha']);
    return $this->db->get('professor');
   }
   
