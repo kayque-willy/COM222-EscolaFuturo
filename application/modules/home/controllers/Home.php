@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+#Controller responsavel por realizar o login no sistema
 class Home extends CI_Controller {
 
 	#Pagina inicial do sistema, de login
@@ -44,6 +45,7 @@ class Home extends CI_Controller {
 				}else{
 					redirect('/home/index/falha', 'refresh');
 				}
+			
 			//Login por professor	
 			}else if($tipoUsuario=='professor'){
 				//Cria o filtro de consulta
@@ -56,14 +58,14 @@ class Home extends CI_Controller {
 				
 				//Consulta o usuario
 				if(!empty($professor->select($filtro)->result())){
-					$_SESSION['login']=$login;
-					
 					//Se o usuario for adminstrivo, seta o tipo como admin
+					$_SESSION['login']=$login;
 					if($login=='admin@email.com')
 						$_SESSION['tipoUsuario']='admin';
 					else
 						$_SESSION['tipoUsuario']='professor';
-						redirect('/home/boasVindas', 'refresh');
+					
+					redirect('/home/boasVindas', 'refresh');
 				}else{
 					redirect('/home/index/falha', 'refresh');
 				}
@@ -86,4 +88,5 @@ class Home extends CI_Controller {
 	public function boasVindas(){
 		echo "Bem vindo";
 	}
+	
 }
