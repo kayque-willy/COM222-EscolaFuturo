@@ -71,6 +71,17 @@ class Home extends CI_Controller {
 		}
 	}
 	
+	#Realiza logoff do usuario
+	public function logoff(){
+		//Limpa a sessão
+		unset($_SESSION['login']);
+		unset($_SESSION['tipoUsuario']);
+					
+		//Redireciona para a pagina inicial 
+		$url = base_url();
+		redirect($url,'refresh');
+	}	
+	
 	#Pagina de boas vindas
 	public function boasVindas(){
 		echo "Bem vindo";
