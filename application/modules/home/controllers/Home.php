@@ -86,7 +86,7 @@ class Home extends CI_Controller {
 	
 	#Pagina de boas vindas
 	public function boasVindas(){
-		echo "Bem vindo";
+	  $this->load->view('home/home.php');
 	}
 	
 }
