@@ -5,47 +5,47 @@ class Turma extends CI_Controller {
 
 	#Index do controller
 	public function index() {
-	   $this->load->view('turma/gerenciamentoTurma');
-	   	
+		 $this->load->model('Turma_model');
+	   $this->load->view('turma/cadastroTurma');
 	 }
 	
+	public function disciplina() {
+		 $this->load->model('Disciplina_model');
+		 $consulta = new Disciplina_model();
+		 $disciplinas = $consulta->select($filtro = '');
+		 $data['disciplinas'] = $disciplinas->result_array();
+	   $this->load->view('turma/cadastroDisciplina', $data);
+	 }
+	
+	
 	#Cria um novo repasse
-	public function cadastrar(){
+	public function cadastrarDisciplina(){
 		
 		//Restrição de acesso
-		if(($_SESSION['tipo']!='Administrativo') and ($_SESSION['tipo']!='Gestor de Projetos')) redirect('/projeto/', 'refresh');
+		//if(($_SESSION['tipo']!='Administrativo') and ($_SESSION['tipo']!='Gestor de Projetos')) redirect('/projeto/', 'refresh');
 		
 		if(!empty($_POST)){
 			
 			//Recebe os dados do formulario
-			$codProjeto = (empty($_POST['codProjeto'])) ? '' : $_POST['codProjeto'];
-			$necessidade = (empty($_POST['necessidade'])) ? '' : $_POST['necessidade'];
-			$data_repasse = (empty($_POST['data'])) ? '' : $_POST['data'];
-			$valorParcela = (empty($_POST['valorParcela'])) ? '' : $_POST['valorParcela'];
-			$status = (empty($_POST['status'])) ? '' : $_POST['status'];
-		
+			$id = (empty($_POST['id'])) ? '' : $_POST['id'];
+			$nome = (empty($_POST['nome'])) ? '' : $_POST['nome'];
+						
 			//Carrega a model
-			$this->load->model('repasse_model');
+			$this->load->model('Disciplina_model');
 		
-			//Cria um novo repasse com os dados do POST
-			$repasse = new Repasse_model($codProjeto,$necessidade,$data_repasse,$valorParcela,$status);
+			//Cria um nova disciplina com os dados do POST
+			$disciplina = new Disciplina_model($id,$nome);
 			
 			//Insere o repasse no banco
-			if($repasse->insert()){
+			if($disciplina->insert()){
 				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
-				redirect('/repasse/consultar/cad_sucesso', 'refresh');
+				$this->load->view('turma/sucesso');
 			}else{
 				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-				redirect('/repasse/consultar/cad_falha', 'refresh');
+				$this->load->view('turma/falha');
 			}
 		}
-		//Consulta o codigo dos projetos
-		$this->load->model('projeto_model');
-		$projeto = new Projeto_model();
-		$data['projetos'] = $projeto->select();
-
-		//Carrega a view 
-		$this->load->view('CRUD_repasse/addREPASSE',$data); 	
+		
 	}
 	
 	#Lista os repasses
