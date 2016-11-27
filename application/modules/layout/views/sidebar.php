@@ -5,7 +5,7 @@
 					<a href="<?php echo base_url() ?>">Home</a>
 				</li>
 				<li>
-					<a href="<?php echo base_url('nota/nota') ?>">Gerenciamento de Notas</a>
+					<a href="<?php echo base_url('nota') ?>">Gerenciamento de Notas</a>
 				</li>
 				<li>
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gerenciamento de Avaliações<span class="caret"></span></a>

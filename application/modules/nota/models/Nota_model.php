@@ -1,4 +1,6 @@
+
 <?php
+
 class Nota_model extends CI_Model{
  
   public $loginAluno;
