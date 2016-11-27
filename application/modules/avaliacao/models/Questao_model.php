@@ -23,17 +23,26 @@ class Questao_model extends CI_Model{
   
   #Insere uma nova questao
   public function insert(){
-     //Cria um vetor de valores para inserção
-     $data = [];
-     if(isset($this->id)) $data['id'] = $this->id;
-     if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina;
-     if(isset($this->enunciado)) $data['enunciado'] = $this->enunciado;
-     if(isset($this->r1)) $data['r1'] = $this->r1;
-     if(isset($this->r2)) $data['r2'] = $this->r1;
-     if(isset($this->r3)) $data['r3'] = $this->r3;
-     if(isset($this->r4)) $data['r4'] = $this->r4;
-     if(isset($this->respostaCerta)) $data['respostaCerta'] = $this->respostaCerta;
-     return $this->db->insert('questao',$data);
+     //Verifica se existe uma questão com este mesmo enunciado e mesma disciplina
+     if(isset($this->idDisciplina))$this->db->where('idDisciplina',$this->idDisciplina);
+     if(isset($this->enunciado)) $this->db->where('enunciado', $this->enunciado);
+  
+     //Se não existir, realiza a inserção
+     if(empty($this->db->get('questao')->result())){
+        //Cria um vetor de valores para inserção
+        $data = [];
+        if(isset($this->id)) $data['id'] = $this->id;
+        if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina;
+        if(isset($this->enunciado)) $data['enunciado'] = $this->enunciado;
+        if(isset($this->r1)) $data['r1'] = $this->r1;
+        if(isset($this->r2)) $data['r2'] = $this->r1;
+        if(isset($this->r3)) $data['r3'] = $this->r3;
+        if(isset($this->r4)) $data['r4'] = $this->r4;
+        if(isset($this->respostaCerta)) $data['respostaCerta'] = $this->respostaCerta;
+        return $this->db->insert('questao',$data);
+     }else{
+       return false;
+     } 
   }
   
   #Desativa uma questao de acordo com a chave primária

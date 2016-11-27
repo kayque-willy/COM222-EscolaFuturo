@@ -21,7 +21,7 @@ class Nota extends CI_Controller {
 			
 		
 	  //Carrega a view
-		$this->load->view('home', $data);
+		$this->load->view('nota/home', $data);
 	 }
 	
 	

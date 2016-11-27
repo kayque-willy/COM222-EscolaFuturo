@@ -40,7 +40,7 @@
 					<h3 class="col-lg-8 col-lg-offset-2 page-header text-center">Clique nas disciplinas abaixo para visualizar as suas questões</h3>
 					<!--mensagem-->
             <?php if (isset($sucesso)){  ?>
-            <div class="col-lg-8 col-lg-offset-2 alert alert-success">
+            <div class="col-lg-8 col-lg-offset-2 alert alert-success text-center">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>SUCESSO!</strong>
                 <p>
@@ -49,7 +49,7 @@
             </div>
             <?php } ?>
             <?php if (isset($falha)){ ?>
-            <div class="col-lg-8 col-lg-offset-2 alert alert-danger">
+            <div class="col-lg-8 col-lg-offset-2 alert alert-danger text-center">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                 <strong>FALHA!</strong>
                 <p>
@@ -61,37 +61,37 @@
 					<!--Lista de questões -->
 					<div class="col-lg-8 col-lg-offset-2">
 						<div class="accordion">
-							<table class="table table-striped table-condensed">
-								<thead>
-									<tr>
-										<th>LISTA DE DISCIPLINAS</th>
-									</tr>
-								</thead>
-							</table>
-							<?php $i = 0; foreach ($disciplinas as $disciplina) { $i ++; ?>
+							<?php $i = 0; foreach ($disciplinas as $disciplina) { $i ++;?>
 								<div class="accordion-group">
 									<div class="accordion-heading">
 										<table class="table table-striped table-condensed">
 											<tbody>
 											<tr>
-												<td>
-													<a class="accordion-toggle" style="decoration:none;" data-toggle="collapse" href="#tab<?php echo $i?>">
-														[<?php echo $disciplina['disciplina']->id ?>] - <?php echo $disciplina['disciplina']->nome?>
+												<td class="active">
+													<b>
+													<a class="accordion-toggle" style="decoration:none;" data-toggle="collapse" href="#tab<?php echo $i?>" >
+														<h4 class="text-center">
+															[<?php echo $disciplina['disciplina']->id ?>] - <?php echo $disciplina['disciplina']->nome?>
+														</h4>
 													</a>
+													</b>
+													
 												</td>
 											</tr>
 										</tbody>
 										</table>
 									</div>
-									<div id="tab<?php echo $i?>" class="accordion-body collapse">
-									  <a class="btn btn-xs btn-success" href="<?php echo base_url('avaliacao/cadastrarQuestao/')."/".$disciplina['disciplina']->id ?>">Adicionar questão</a>
+									<div id="tab<?php echo $i?>" class="accordion-body collapse <?php if($disciplina['disciplina']->id==$idDisciplina) echo 'in' ?>">
+										<div class="text-center">
+												<a class="btn btn-sm btn-success" href="<?php echo base_url('avaliacao/cadastrarQuestao/')."/".$disciplina['disciplina']->id ?>">Adicionar questão</a>
+										</div>
 										<div class="accordion-inner">
 											<?php if(!empty($disciplina['questoes'])){ ?>
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th>Questao</th>
-															<th>Ação</th>
+															<th>Questão</th>
+															<th class="text-center">Ação</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -100,7 +100,7 @@
 															<td>
 																<?php echo "(".$j++.") - ".$questao->enunciado  ?>
 															</td>
-															<td>
+															<td class="text-center">
 																<a class="btn btn-xs btn-info" href="<?php echo base_url('avaliacao/editarQuestao/')."/".$questao->id ?>">Editar</a> 
 																<a class="btn btn-xs btn-danger" href="<?php echo base_url('avaliacao/excluirQuestao/')."/".$questao->id ?>">Excluir</a>
 															</td>
@@ -109,7 +109,7 @@
 													</tbody>
 												</table>
 											<?php }else{ ?>
-												<h4 class="alert alert-info">Nenhuma questão cadastrada para esta disciplina</h4>
+												<h4 class="alert alert-info text-center">Nenhuma questão cadastrada para esta disciplina</h4>
 											<?php } ?>
 										</div>
 									</div>

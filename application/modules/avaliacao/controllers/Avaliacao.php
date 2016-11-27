@@ -11,7 +11,7 @@ class Avaliacao extends CI_Controller {
 	}
 	
   #Lista todas as questões por disciplina
-	public function questao($result='') {
+	public function questao($result='',$idDisciplina='') {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or (($_SESSION['tipoUsuario']!='admin') and ($_SESSION['tipoUsuario']!='professor'))) redirect(base_url().'home', 'refresh');
 		
@@ -36,7 +36,7 @@ class Avaliacao extends CI_Controller {
 					break;
 				case 'exc_sucesso':
 					$data['sucesso']=true;
-					$data['msg'] = 'Questão desativado com sucesso!';
+					$data['msg'] = 'Questão excluida com sucesso!';
 					break;
 				case 'exc_falha':
 					$data['falha']=true;
@@ -44,6 +44,9 @@ class Avaliacao extends CI_Controller {
 					break;
 			}
 		}
+		
+		//Recupera o ID da disciplina, se houver
+		$data['idDisciplina']=$idDisciplina;
 		
 		//Carrega as models
 		$this->load->model('turma/disciplina_model');
@@ -96,9 +99,9 @@ class Avaliacao extends CI_Controller {
 			
 			//Insere o resgistro no banco
 			if($questao->insert())
-				redirect(base_url('avaliacao/questao/cad_sucesso'));
+				redirect(base_url('avaliacao/questao/cad_sucesso/'.$idDisciplina));
 			else
-				redirect(base_url('avaliacao/questao/cad_falha'));	
+				redirect(base_url('avaliacao/questao/cad_falha/'.$idDisciplina));	
 		}
 		
 		//Recupera o ID da disciplina
