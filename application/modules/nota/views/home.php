@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Cadastro de Disciplina</title>
+	<title>Lista de Disciplinas</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<!-- Navibar -->
@@ -33,7 +33,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2">
-						<h1>Cadastro de Disciplinas</h1>
+						<h1>Lista de Disciplinas Cursadas</h1>
 						<form action="atualizarDisciplina" method="post">
 							<div class="form-group">
 								<label for="id">Código da Disciplina:</label>
@@ -62,6 +62,7 @@
 									<td><?php echo $row['id']?></td>
 									<td><?php echo $row['nome']?></td>
 									<td><a href="<?php echo base_url('turma/editarDisciplina?id=').$row['id'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirDisciplina?id=').$row['id'] ?>">Excluir</a></td>
+			
 								</tr>
 								<?php } ?>
 							</tbody>

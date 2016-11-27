@@ -6,7 +6,63 @@ class Avaliacao extends CI_Controller {
 	# ------------ Visualizar ----------
 	
 	#Lista todas as avaliações
-	public function index(){
+	public function index($result=''){
+		//Restrição de acesso
+		if(!isset($_SESSION['tipoUsuario']) or (($_SESSION['tipoUsuario']!='admin') and ($_SESSION['tipoUsuario']!='professor'))) redirect(base_url().'home', 'refresh');
+		
+		//Mensagem de resultado de alguma operação
+		if(isset($result)){
+			switch ($result){
+				case 'cad_sucesso': 
+					$data['sucesso']=true;
+					$data['msg'] = 'Avaliação cadastrada com sucesso!';
+					break;
+				case 'cad_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao cadastrar a avaliação!';
+					break;
+				case 'alt_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Avaliação atualizada com sucesso!';
+					break;
+				case 'alt_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao atualizar a avaliação!';
+					break;
+				case 'exc_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Avaliação excluida com sucesso!';
+					break;
+				case 'exc_falha':
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao remover a avaliação!';
+					break;
+			}
+		}
+		
+		//Carrega as models
+		$this->load->model('turma/turma_model');
+		$this->load->model('avaliacao/avaliacao_model');
+		
+		//Consulta as turmas do professor
+		$consulta = new Turma_model();
+		$filtro['loginProfessor']=$_SESSION['login'];
+		$turmas=$consulta->select($filtro)->result();
+		
+		//Consulta as avaliações de cada turma
+		$data['avaliacoes'] = [];
+		foreach($turmas as $turma){
+			$consulta = new Avaliacao_model();
+			$filtro['idTurma'] = $turma->id;
+			$filtro['idDisciplina'] = $turma->idDisciplina;
+			$filtro['loginProfessor'] = $turma->loginProfessor;
+			//Adiciona as avaliaçõse e a turman no vetor
+			$avaliacoes['turma'] = $turma;
+			$avaliacoes['avaliacoes'] = $consulta->select($filtro)->result();
+			$data['avaliacoes'][] = $avaliacoes;
+		}
+		
+		var_dump($data['avaliacoes']);
 		
 	}
 	

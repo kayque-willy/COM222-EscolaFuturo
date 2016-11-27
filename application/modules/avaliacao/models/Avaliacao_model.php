@@ -76,6 +76,5 @@ class Avaliacao_model extends CI_Model{
    $this->db->join('avaliacao', 'avaliacao_questao.idAvaliacao = avaliacao.id','inner');
    $this->db->join('questao', 'avaliacao_questao.idQuestao = questao.id','inner');
    return $this->db->get();
-  } 
-  
+  }  
 }
