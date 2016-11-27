@@ -27,7 +27,7 @@ class Professor_model extends CI_Model{
   public function remove() {
     //Cria um vetor de valores para atualização
     $data = [];
-    if(isset($this->codigo)) $data['login'] = $this->codigo;
+    if(isset($this->login)) $data['login'] = $this->login;
   
     return $this->db->delete('professor',$data);
   }
@@ -36,7 +36,7 @@ class Professor_model extends CI_Model{
   public function update ($login='') {
      //Cria um vetor de valores para atualização
      $data = [];
-     if(isset($this->nome)) $data['nome'] = $this->login;
+     if(isset($this->nome)) $data['nome'] = $this->nome;
      if(isset($this->senha)) $data['senha'] = $this->senha;
    
      //Cria um vetor com a chave primaria

@@ -37,6 +37,14 @@ class Nota_model extends CI_Model{
      return $this->db->update('nota',$data,$where);
   }
   
+   public function removeAluno($login) {
+   //Cria um vetor de valores para atualização
+    $data = [];
+    $data['loginAluno'] = $login; 
+      
+    return $this->db->delete('turma_aluno',$data);
+  }
+  
   #Retorna o nota
   public function select($filtro='') {
    //Adiciona clausula where

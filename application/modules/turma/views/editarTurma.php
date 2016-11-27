@@ -35,39 +35,43 @@
 
 					<div class="col-lg-8 col-lg-offset-2">
 						<h1>Cadastro de Turmas</h1>
-						<form action="turma/cadastrarTurma" method="post">
+						<form action="turma/atualizarTurma" method="post">
 							<div class="form-group">
 								<label for="id">Nome da Turma:</label>
-								<input type="text" class="form-control" id="id" name="id">
+								<input type="text" disabled="true" value="<?php echo $turma[0]['id']?>" class="form-control" id="id">
+								<input type="hidden" value="<?php echo $turma[0]['id']?>" name="id">
 							</div>
 							<div class="form-group">
+								<?php print_r($turma)?>
 								<label for="idDisciplina">Disciplina:</label>
-								<select class="form-control" id="idDisciplina" name="idDisciplina">
+								<select class="form-control" disabled="true" value="<?php echo $turma[0]['idDisciplina']?>" id="idDisciplina">
        					<option>Selecione</option>
 									<?php foreach ($disciplinas as $row) { ?>
         								<option value="<?php echo $row['id'] ?>"><?php echo $row['id'] ?></option>
         						<?php } ?>
       					</select>
+								<input type="hidden" value="<?php echo $turma[0]['idDisciplina']?>" name="idDisciplina">
 							</div>
 							<div class="form-group">
 								<label for="loginProfessor">Professor:</label>
-								<select class="form-control" id="loginProfessor" name="loginProfessor">
+								<select class="form-control" disabled="true" value="<?php echo $turma[0]['loginProfessor']?>" id="loginProfessor">
        					<option>Selecione</option>
 									<?php foreach ($professores as $row) { ?>
         								<option value="<?php echo $row['login'] ?>"><?php echo $row['nome'] ?></option>
         						<?php } ?>
       					</select>
+								<input type="hidden" value="<?php echo $turma[0]['loginProfessor']?>" name="loginProfessor">
 							</div>
 							<div class="form-group">
 								<label for="loginAluno">Alunos:</label>
-								<select multiple class="form-control" id="loginAluno" name="loginAluno[]">
+								<select multiple class="form-control" value="<?php echo $turma[0]['alunos'][0]?>" id="loginAluno" name="loginAluno[]">
        					<option>Selecione</option>
 									<?php foreach ($alunos as $row) { ?>
         								<option value="<?php echo $row['login'] ?>"><?php echo $row['nome'] ?></option>
         						<?php } ?>
       					</select>
 							</div>
-							<button type="submit" class="btn btn-default">Cadastrar</button>
+							<button type="submit" class="btn btn-default">Salvar</button>
 						</form>
 					</div>
 
@@ -87,7 +91,7 @@
 							<div class="accordion-group">
 								<div class="accordion-heading">
 										<table class="table table-striped table-condensed">
-											<thead>
+											<tbody>
 												<tr>
 													<td>
 														<a class="accordion-toggle" style="decoration:none;" data-toggle="collapse" href="#tab<?php echo $i?>"><?php echo $row['id']?></a>
@@ -102,7 +106,7 @@
 														<a href="<?php echo base_url('turma/editarTurma?id=').$row['id'].'&disciplina='.$row['idDisciplina'].'&professor='.$row['loginProfessor'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirTurma?id=').$row['id'].'&disciplina='.$row['idDisciplina'].'&professor='.$row['loginProfessor'] ?>">Excluir</a>
 													</td>
 												</tr>
-											</thead>
+											</tbody>
 										</table>
 								</div>
 								<div id="tab<?php echo $i?>" class="accordion-body collapse">

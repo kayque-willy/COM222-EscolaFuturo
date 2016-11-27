@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Cadastro de Professores</title>
+	<title>Cadastro de Disciplina</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<!-- Navibar -->
@@ -33,38 +33,35 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2">
-						<h1>Cadastro de Professores</h1>
-						<form action="cadastrarProfessor" method="post">
+						<h1>Cadastro de Disciplinas</h1>
+						<form action="atualizarDisciplina" method="post">
 							<div class="form-group">
-								<label for="nome">Nome do Professor:</label>
-								<input type="text" class="form-control" id="nome" name="nome">
+								<label for="id">Código da Disciplina:</label>
+								<input type="text" disabled="true" value="<?php echo $disciplina[0]['id']?>" class="form-control" id="id" >
+								<input type="hidden" value="<?php echo $disciplina[0]['id']?>" name="id">
 							</div>
 							<div class="form-group">
-								<label for="login">Login (E-mail):</label>
-								<input type="text" class="form-control" id="login" name="login">
+								<label for="nome">Nome da Disciplina:</label>
+								<input type="text" value="<?php echo $disciplina[0]['nome']?>" class="form-control" id="nome" name="nome">
 							</div>
-							<div class="form-group">
-								<label for="senha">Senha:</label>
-								<input type="password" class="form-control" id="senha" name="senha">
-							</div>
-							<button type="submit" class="btn btn-default">Cadastrar</button>
+							<button type="submit" class="btn btn-default">Salvar</button>
 						</form>
 					</div>
 					<div class="col-lg-8 col-lg-offset-2">
 						<table class="table table-striped">
 							<thead>
 								<tr>
+									<th>CÓDIGO</th>
 									<th>NOME</th>
-									<th>LOGIN</th>
 									<th>AÇÕES</th>
 								</tr>
 							</thead>
 							<tbody>
-								<?php foreach ($professores as $row) { ?>
+								<?php foreach ($disciplinas as $row) { ?>
 								<tr>
+									<td><?php echo $row['id']?></td>
 									<td><?php echo $row['nome']?></td>
-									<td><?php echo $row['login']?></td>
-									<td><a href="<?php echo base_url('turma/editarProfessor?login=').$row['login'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirProfessor?login=').$row['login'] ?>">Excluir</a></td>
+									<td><a href="<?php echo base_url('turma/editarDisciplina?id=').$row['id'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirDisciplina?id=').$row['id'] ?>">Excluir</a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
@@ -77,9 +74,10 @@
 
 	</div>
 	<!-- /#sidebar-wrapper -->
-  <!--Footer-->
+	<!--Footer-->
 	<?php $this->load->view('layout/footer'); ?>
 	<!--Footer-->
+
 </body>
 
 </html>

@@ -8,7 +8,12 @@
 					<a href="#">Gerenciamento de Notas</a>
 				</li>
 				<li>
-					<a href="#">Gerenciamento de Avaliações</a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gerenciamento de Avaliações<span class="caret"></span></a>
+				  <ul class="dropdown-menu" role="menu">
+						<li class="dropdown-header">Opções</li>
+						<li><a href="<?php echo base_url('avaliacao/questao') ?>">Banco de questões</a></li>
+						<li><a href="<?php echo base_url('avaliacao') ?>">Avaliações</a></li>
+					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gerenciamento de Turmas <span class="caret"></span></a>

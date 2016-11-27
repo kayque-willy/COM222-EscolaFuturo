@@ -53,6 +53,9 @@
 						</form>
 					</div>
 					<div class="col-lg-8 col-lg-offset-2">
+						<?php if (!empty($retorno)){ ?>
+							<h1 style="color:red;"><?php echo $retorno ?></h1>
+						<?php } ?>
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -66,7 +69,7 @@
 								<tr>
 									<td><?php echo $row['nome']?></td>
 									<td><?php echo $row['login']?></td>
-									<td>Excluir, Editar</td>
+									<td><a href="<?php echo base_url('turma/editarAluno?login=').$row['login'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirAluno?login=').$row['login'] ?>">Excluir</a></td>
 								</tr>
 								<?php } ?>
 							</tbody>

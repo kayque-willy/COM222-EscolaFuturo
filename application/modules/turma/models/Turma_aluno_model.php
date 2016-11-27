@@ -46,6 +46,14 @@ class Turma_aluno_model extends CI_Model{
     return $this->db->delete('turma_aluno',$data);
   }
  
+  public function removeAluno($login) {
+   //Cria um vetor de valores para atualização
+    $data = [];
+    $data['loginAluno'] = $login; 
+      
+    return $this->db->delete('turma_aluno',$data);
+  }
+  
   #Atualiza o objeto a partir da chave primaria
   public function update ($loginAluno='',$idTurma='',$idDisciplina='',$loginProfessor='') {
      //Cria um vetor de valores para atualização

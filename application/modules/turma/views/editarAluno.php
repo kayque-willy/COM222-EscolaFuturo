@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Cadastro de Professores</title>
+	<title>Cadastro de Alunos</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 	<!-- Navibar -->
@@ -14,6 +14,7 @@
 </head>
 
 <body>
+	
 	<!-- Sidebar -->
 	<div id="wrapper">
 		<div class="overlay"></div>
@@ -21,6 +22,7 @@
 		<!--Sidebar-->
 		<?php $this->load->view('layout/sidebar'); ?>
 	  <!--Sidebar-->
+		
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
@@ -33,24 +35,28 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2">
-						<h1>Cadastro de Professores</h1>
-						<form action="cadastrarProfessor" method="post">
+						<h1>Cadastro de Alunos</h1>
+						<form action="atualizarAluno" method="post">
 							<div class="form-group">
-								<label for="nome">Nome do Professor:</label>
-								<input type="text" class="form-control" id="nome" name="nome">
+								<label for="nome">Nome do Aluno:</label>
+								<input type="text" value="<?php echo $aluno[0]['nome']?>" class="form-control" id="nome" name="nome">
 							</div>
 							<div class="form-group">
 								<label for="login">Login (E-mail):</label>
-								<input type="text" class="form-control" id="login" name="login">
+								<input type="text" disabled="true" value="<?php echo $aluno[0]['login']?>" class="form-control" id="login" >
+								<input type="hidden" value="<?php echo $aluno[0]['login']?>" name="login">
 							</div>
 							<div class="form-group">
 								<label for="senha">Senha:</label>
-								<input type="password" class="form-control" id="senha" name="senha">
+								<input type="password" value="<?php echo $aluno[0]['senha']?>" class="form-control" id="senha" name="senha">
 							</div>
-							<button type="submit" class="btn btn-default">Cadastrar</button>
+							<button type="submit" class="btn btn-default">Salvar</button>
 						</form>
 					</div>
 					<div class="col-lg-8 col-lg-offset-2">
+						<?php if (!empty($retorno)){ ?>
+							<h1 style="color:red;"><?php echo $retorno ?></h1>
+						<?php } ?>
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -60,11 +66,11 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php foreach ($professores as $row) { ?>
+								<?php foreach ($alunos as $row) { ?>
 								<tr>
 									<td><?php echo $row['nome']?></td>
 									<td><?php echo $row['login']?></td>
-									<td><a href="<?php echo base_url('turma/editarProfessor?login=').$row['login'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirProfessor?login=').$row['login'] ?>">Excluir</a></td>
+									<td><a href="<?php echo base_url('turma/editarAluno?login=').$row['login'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirAluno?login=').$row['login'] ?>">Excluir</a></td>
 								</tr>
 								<?php } ?>
 							</tbody>

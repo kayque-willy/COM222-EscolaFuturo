@@ -34,20 +34,21 @@
 				<div class="row">
 					<div class="col-lg-8 col-lg-offset-2">
 						<h1>Cadastro de Professores</h1>
-						<form action="cadastrarProfessor" method="post">
+						<form action="atualizarProfessor" method="post">
 							<div class="form-group">
 								<label for="nome">Nome do Professor:</label>
-								<input type="text" class="form-control" id="nome" name="nome">
+								<input type="text" value="<?php echo $professor[0]['nome']?>" class="form-control" id="nome" name="nome">
 							</div>
 							<div class="form-group">
 								<label for="login">Login (E-mail):</label>
-								<input type="text" class="form-control" id="login" name="login">
+								<input type="text" disabled="true" value="<?php echo $professor[0]['login']?>" class="form-control" id="login" name="login">
+								<input type="hidden" value="<?php echo $professor[0]['login']?>" name="login">
 							</div>
 							<div class="form-group">
 								<label for="senha">Senha:</label>
-								<input type="password" class="form-control" id="senha" name="senha">
+								<input type="password" value="<?php echo $professor[0]['senha']?>"  class="form-control" id="senha" name="senha">
 							</div>
-							<button type="submit" class="btn btn-default">Cadastrar</button>
+							<button type="submit" class="btn btn-default">Salvar</button>
 						</form>
 					</div>
 					<div class="col-lg-8 col-lg-offset-2">

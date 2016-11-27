@@ -60,7 +60,7 @@
 								<tr>
 									<td><?php echo $row['id']?></td>
 									<td><?php echo $row['nome']?></td>
-									<td>Excluir, Editar</td>
+									<td><a href="<?php echo base_url('turma/editarDisciplina?id=').$row['id'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirDisciplina?id=').$row['id'] ?>">Excluir</a></td>
 								</tr>
 								<?php } ?>
 							</tbody>
