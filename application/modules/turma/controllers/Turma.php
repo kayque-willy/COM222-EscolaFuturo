@@ -36,6 +36,7 @@ class Turma extends CI_Controller {
 	   $this->load->view('turma/cadastroTurma', $data);
 	 }
 	
+	#Lista as disciplinas
 	public function disciplina() {
 		 $this->load->model('Disciplina_model');
 		 $consulta = new Disciplina_model();
@@ -44,6 +45,7 @@ class Turma extends CI_Controller {
 	   $this->load->view('turma/cadastroDisciplina', $data);
 	 }
 	
+	#Lista os professores
 	public function professor() {
 		 $this->load->model('Professor_model');
 		 $consulta = new Professor_model();
@@ -52,6 +54,7 @@ class Turma extends CI_Controller {
 	   $this->load->view('turma/cadastroProfessor', $data);
 	 }
 	
+	#Lista os alunos
 	public function aluno() {
 		 $this->load->model('Aluno_model');
 		 $consulta = new Aluno_model();
@@ -193,8 +196,5 @@ class Turma extends CI_Controller {
 					$this->load->view('turma/falha');
 			}
 		}
-		
 	}
-	
-	
 }

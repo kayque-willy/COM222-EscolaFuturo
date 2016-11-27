@@ -7,6 +7,9 @@ class Home extends CI_Controller {
 	#Pagina inicial do sistema, de login
 	public function index($result=''){
 	
+		//Redireciona para a home se o usuario estiver logado
+		if(!empty($_SESSION['login'])) redirect('home/boasVindas');
+		
 		$data['msg']=null;
 		
 		//Mensagem de falha
