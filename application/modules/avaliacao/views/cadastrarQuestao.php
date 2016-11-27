@@ -88,6 +88,7 @@
 							</div>
 							<!--Reposta correta-->
 							<button type="submit" class="btn btn-success">Cadastrar</button>
+							<a href="<?php echo base_url('avaliacao/questao') ?>" type="submit" class="btn btn-default">Cancelar</a>
 						</form>
 						<!--Formulario de cadastro -->
 					</div>

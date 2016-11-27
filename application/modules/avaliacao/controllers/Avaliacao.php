@@ -130,4 +130,54 @@ class Avaliacao extends CI_Controller {
 			redirect(base_url('avaliacao/questao/exc_falha'));	
 	}	
 	
+	# ------------ Editar ----------
+	
+	#Exclui uma questão no banco de dados
+	public function editarQuestao($idQuestao=''){
+
+		//Cadastra a questão
+		if(!empty($_POST)){
+			
+			$idQuestao = (empty($_POST['idQuestao'])) ? '' : $_POST['idQuestao']; 
+			$idDisciplina = (empty($_POST['idDisciplina'])) ? '' : $_POST['idDisciplina']; 
+			$enunciado = (empty($_POST['enunciado'])) ? '' : $_POST['enunciado']; 
+			$r1 = (empty($_POST['r1'])) ? '' : $_POST['r1']; 
+			$r2 = (empty($_POST['r2'])) ? '' : $_POST['r2']; 
+			$r3 = (empty($_POST['r3'])) ? '' : $_POST['r3']; 
+			$r4 = (empty($_POST['r4'])) ? '' : $_POST['r4']; 
+			$respostaCerta = (empty($_POST['respostaCerta'])) ? '' : $_POST['respostaCerta']; 
+			
+			//Carrega a model
+			$this->load->model('avaliacao/questao_model');
+			$questao = new Questao_model(null,$idDisciplina,$enunciado,$r1,$r2,$r3,$r4,$respostaCerta);
+		
+			//Atualiza o resgistro no banco
+			if($questao->update($idQuestao))
+				redirect(base_url('avaliacao/questao/alt_sucesso/'.$idDisciplina));
+			else
+				redirect(base_url('avaliacao/questao/alt_falha/'.$idDisciplina));	
+		}
+		
+		//Recupera os dados para preencher o formulario de edição
+		if(!empty($idQuestao)){
+			//Carrega a model
+			$this->load->model('avaliacao/questao_model');
+			
+			//Consulta os dados da questão para edição
+			$questao = new Questao_model();
+			$filtro['idQuestao']=$idQuestao;
+			
+			//Adiciona os resultados
+			$data['idQuestao']=$idQuestao;
+			$data['questao']=$questao->select($filtro)->result();
+			
+			//Remove o resgistro no banco
+			if($data['questao'])
+				$this->load->view('avaliacao/editarQuestao',$data);
+			else
+				redirect(base_url('avaliacao/questao/alt_falha'));	
+		}else
+			redirect(base_url('avaliacao/questao/alt_falha'));	
+	}	
+	
 }
