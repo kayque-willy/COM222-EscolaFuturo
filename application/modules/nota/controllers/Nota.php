@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Avaliacao extends CI_Controller {
+class Nota extends CI_Controller {
 
 	# ------------ Visualizar ----------
 	
@@ -11,43 +11,44 @@ class Avaliacao extends CI_Controller {
 	}
 	
   #Lista todas as questões por disciplina
-	public function questao() {
+	public function Nota() {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or (($_SESSION['tipoUsuario']!='admin') and ($_SESSION['tipoUsuario']!='professor'))) redirect(base_url().'home', 'refresh');
 		
 		//Carrega as models
-		$this->load->model('turma/disciplina_model');
-		$this->load->model('avaliacao/questao_model');
+		//$this->load->model('turma/disciplina_model');
+	//	$this->load->model('Nota_model');
+		$this->load->model('nota_model');
 		
 		//Consulta as disciplinas
-		$consulta = new Disciplina_model();
-		$consulta_disciplina = $consulta->select($filtro = '')->result();
+		//$consulta = new Nota_model();
+		//$consulta_Nota = $consulta->select($filtro = '')->result();
 		
-		$data['disciplinas']=[];
+		//$data['disciplinas']=[];
 		//consulta as questões
-		foreach($consulta_disciplina as $disciplina){
+		//foreach($consulta_disciplina as $disciplina){
 				//Filtra por disciplina
-				$filtro['idDisciplina'] = $disciplina->id;
+		//		$filtro['idDisciplina'] = $disciplina->id;
 				
 			  //Consulta as questões da disciplina de acordo com o id
-			  $consulta = new Questao_model();
-			  $questao = $consulta->select($filtro)->result();
+			 // $consulta = new Questao_model();
+			 // $questao = $consulta->select($filtro)->result();
 			  
 				//Armazena a discplina no vetor
-			  $result= [];
-			  $result['disciplina']=$disciplina;
-			  $result['questoes']=$questao;
-			  $data['disciplinas'][]=$result;
+			//  $result= [];
+			 // $result['disciplina']=$disciplina;
+			 // $result['questoes']=$questao;
+			 // $data['disciplinas'][]=$result;
 		}
 		
 	  //Carrega a view
-		$this->load->view('avaliacao/cadastroQuestao', $data);
+	//	$this->load->view('nota/home', $data);
 	 }
 	
 	# ------------ Cadastrar ----------
 	
 	#Cadastra uma questão no banco de dados
-	public function cadastrarQuestao(){
-		var_dump($_POST);
-	}
-}
+//	public function cadastrarQuestao(){
+		//var_dump($_POST);
+//	}
+//}

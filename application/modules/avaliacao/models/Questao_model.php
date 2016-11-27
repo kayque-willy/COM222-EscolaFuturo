@@ -13,6 +13,7 @@ class Questao_model extends CI_Model{
   public function __construct($id='',$idDisciplina='',$enunciado='',$r1='',$r2='',$r3='',$r4='',$respostaCerta=''){
      if(isset($id)) $this->id=$id;
      if(isset($idDisciplina)) $this->idDisciplina=$idDisciplina;
+     if(isset($enunciado)) $this->enunciado=$enunciado;
      if(isset($r1)) $this->r1=$r1;
      if(isset($r2)) $this->r2=$r2;
      if(isset($r3)) $this->r3=$r3;
