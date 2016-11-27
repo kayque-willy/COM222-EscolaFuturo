@@ -42,10 +42,8 @@
 								<input type="hidden" value="<?php echo $turma[0]['id']?>" name="id">
 							</div>
 							<div class="form-group">
-								<?php print_r($turma)?>
 								<label for="idDisciplina">Disciplina:</label>
 								<select class="form-control" disabled="true" value="<?php echo $turma[0]['idDisciplina']?>" id="idDisciplina">
-       					<option>Selecione</option>
 									<?php foreach ($disciplinas as $row) { ?>
         								<option value="<?php echo $row['id'] ?>"><?php echo $row['id'] ?></option>
         						<?php } ?>
@@ -55,7 +53,6 @@
 							<div class="form-group">
 								<label for="loginProfessor">Professor:</label>
 								<select class="form-control" disabled="true" value="<?php echo $turma[0]['loginProfessor']?>" id="loginProfessor">
-       					<option>Selecione</option>
 									<?php foreach ($professores as $row) { ?>
         								<option value="<?php echo $row['login'] ?>"><?php echo $row['nome'] ?></option>
         						<?php } ?>
@@ -64,10 +61,18 @@
 							</div>
 							<div class="form-group">
 								<label for="loginAluno">Alunos:</label>
-								<select multiple class="form-control" value="<?php echo $turma[0]['alunos'][0]?>" id="loginAluno" name="loginAluno[]">
-       					<option>Selecione</option>
+								<select multiple class="form-control" id="loginAluno" name="loginAluno[]">
 									<?php foreach ($alunos as $row) { ?>
-        								<option value="<?php echo $row['login'] ?>"><?php echo $row['nome'] ?></option>
+											<?php if (in_array($row['login'], $turma[0]['alunos'])) {?>
+        								<option value="<?php echo $row['login'] ?>" selected="selected"><?php echo $row['nome'] ?></option>
+        							<?php } else { ?>
+												<option value="<?php echo $row['login']?>"><?php echo $row['nome'] ?></option>
+											<?php } ?>
+									<?php } ?>
+      					</select>
+								<select style="display:none;" multiple class="form-control" type="hidden" name="alunosAntigos[]">
+									<?php foreach ($turma[0]['alunos'] as $row) { ?>
+        								<option value="<?php echo $row ?>" selected="selected"><?php echo $row?></option>
         						<?php } ?>
       					</select>
 							</div>

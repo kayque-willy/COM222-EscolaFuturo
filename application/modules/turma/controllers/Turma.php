@@ -34,6 +34,8 @@ class Turma extends CI_Controller {
 				$i++;
 				$consulta = new Turma_aluno_model();
 				$filtro['idTurma'] = $t['id'];
+				$filtro['idDisciplina'] = $t['idDisciplina'];
+				$filtro['loginProfessor'] = $t['loginProfessor'];
 				$alunosTurma = $consulta->select($filtro);
 				$data['turmas'][$i]['alunos'] = $alunosTurma->result_array();
 			}
@@ -404,33 +406,28 @@ class Turma extends CI_Controller {
 			$professor = (empty($_POST['loginProfessor'])) ? '' : $_POST['loginProfessor'];
 			$disciplina = (empty($_POST['idDisciplina'])) ? '' : $_POST['idDisciplina'];
 			$alunos = (empty($_POST['loginAluno'])) ? '' : $_POST['loginAluno'];
+			$alunosAntigos = (empty($_POST['alunosAntigos'])) ? '' : $_POST['alunosAntigos'];
 			
 			//Carrega a model
 			$this->load->model('Turma_model');
-		
-			//Cria um nova disciplina com os dados do POST
-			$turmac = new Turma_model($turma, $professor, $disciplina);
-			
+
 			//Insere o repasse no banco
 			if (!empty($alunos)){
-				if($turmac->update($turma,$professor,$disciplina)){
-					//Se a operação for bem sucedida, redireciona com mensagem de sucesso
 					// salva alunos
 					$this->load->model('Turma_aluno_model');
-					foreach ($alunos as $a){
+				if (!empty($alunosAntigos)){
+					 foreach ($alunosAntigos as $ab){
+							$aluno = new Turma_aluno_model($ab, $turma, $disciplina, $professor);
+							$aluno->remove();
+					 }
+				 }
+				
+				 foreach ($alunos as $a){
 						$aluno = new Turma_aluno_model($a, $turma, $disciplina, $professor);
-						$aluno->remove();
 						$aluno->insert();
-					}
+				 }
 
-					$this->load->view('turma/sucesso');
-				}else{
-					//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-					$this->load->view('turma/falha');
-				}
-			}else{
-					//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-					$this->load->view('turma/falha');
+					$this->load->view('sucesso');
 			}
 		}
 	}
@@ -464,19 +461,32 @@ class Turma extends CI_Controller {
 				$i++;
 				$consulta = new Turma_aluno_model();
 				$filtro['idTurma'] = $t['id'];
+				$filtro['idDisciplina'] = $t['idDisciplina'];
+				$filtro['loginProfessor'] = $t['loginProfessor'];
 				$alunosTurma = $consulta->select($filtro);
 				$data['turmas'][$i]['alunos'] = $alunosTurma->result_array();
 			}
 		}
 		 $filtro['id'] = $_GET['id'];
+		 $filtro['loginProfessor'] = $_GET['professor'];
+		 $filtro['idDisciplina'] = $_GET['disciplina'];
 		 $consulta = new Turma_model();
 		 $d = $consulta->select($filtro);
 		 $data['turma'] = $d->result_array();
 		 $consulta = new Turma_aluno_model();
 		 $filtro2['idTurma'] = $data['turma'][0]['id'];
+		 $filtro2['loginProfessor'] = $_GET['professor'];
+		 $filtro2['idDisciplina'] = $_GET['disciplina'];
 		 $alunoTurma2 = $consulta->select($filtro2);
-		 $data['turma'][0]['alunos'] = $alunoTurma2->result_array();
-	   $this->load->view('turma/editarTurma', $data);
+		 $i = 0;
+		 $aux[0] = '';
+		 foreach ($alunoTurma2->result_array() as $a){
+		 		$aux[$i] = $a['loginAluno'];
+				$i++;
+		 }
+		 $data['turma'][0]['alunos'] = $aux;
+	   
+		$this->load->view('turma/editarTurma', $data);
 	 }
 	
 	#Lista as disciplinas

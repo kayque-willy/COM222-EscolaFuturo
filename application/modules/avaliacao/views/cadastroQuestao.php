@@ -115,7 +115,7 @@
 											<tr>
 												<td>
 													<a class="accordion-toggle" style="decoration:none;" data-toggle="collapse" href="#tab<?php echo $i?>">
-														[<?php echo $disciplina->id ?>] - <?php echo $disciplina->nome?>
+														[<?php echo $disciplina['disciplina']->id ?>] - <?php echo $disciplina['disciplina']->nome?>
 													</a>
 												</td>
 											</tr>
@@ -132,13 +132,14 @@
 													</tr>
 												</thead>
 												<tbody>
-													<?php for($j=0; $j<3 ;$j++) { ?>
+													<?php $j=1; foreach($disciplina['questoes'] as $questao) {  ?>
 													<tr>
 														<td>
-															<?php echo "llll" ?>
+															<?php echo "(".$j++.") - ".$questao->enunciado  ?>
 														</td>
 														<td>
-															<?php echo "llll" ?>
+															<a href="<?php echo base_url('avaliacao/editarQuestao/')."/".$questao->id ?>">Editar</a>, 
+															<a href="<?php echo base_url('avaliacao/excluirQuestao/')."/".$questao->id ?>">Excluir</a>
 														</td>
 													</tr>
 													<?php } ?>
