@@ -273,7 +273,7 @@ class Avaliacao extends CI_Controller {
 	
 	# ------------ Editar ----------
 	
-	#Exclui uma questão no banco de dados
+	#Edita uma questão no banco de dados
 	public function editarQuestao($idQuestao=''){
 
 		//Cadastra a questão
@@ -320,5 +320,32 @@ class Avaliacao extends CI_Controller {
 		}else
 			redirect(base_url('avaliacao/questao/alt_falha'));	
 	}	
+	
+	#Edita uma avaliação no banco de dados
+	public function editarAvaliacao($idAvaliacao=''){
+		
+		//Recupera os dados para preencher o formulario de avaliação
+		if(!empty($idAvaliacao)){
+			//Carrega a model
+			$this->load->model('avaliacao/avaliacao_model');
+			
+			//Consulta os dados da questão para edição
+			$avaliacao = new Avaliacao_model();
+			$filtro['id']=$idAvaliacao;
+			
+			//Adiciona os resultados
+			$data['avaliacao']=$avaliacao->select($filtro)->result_array();
+			$data['avaliacao']=$data['avaliacao'][0];
+			$data['questoes']=$avaliacao->listar_questoes($filtro)->result();
+			
+			//print_r($data);
+			
+			if($data['avaliacao'])
+				$this->load->view('avaliacao/editarAvaliacao',$data);
+			else
+				redirect(base_url('avaliacao/index/alt_falha'));	
+		}else
+			redirect(base_url('avaliacao/index/alt_falha'));	
+	}
 	
 }

@@ -83,7 +83,7 @@ class Avaliacao_model extends CI_Model{
    if(!empty($filtro['id'])) $this->db->where('avaliacao.id', $filtro['id']);
     
    //Consultar inner join
-   $this->db->select('questao.*, avaliacao.*');    
+   $this->db->select('questao.*, avaliacao.nome as nomeAvaliacao, avaliacao.idTurma as turma');    
    $this->db->from('avaliacao_questao');
    $this->db->join('avaliacao', 'avaliacao_questao.idAvaliacao = avaliacao.id','inner');
    $this->db->join('questao', 'avaliacao_questao.idQuestao = questao.id','inner');
