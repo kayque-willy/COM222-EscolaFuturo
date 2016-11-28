@@ -16,6 +16,8 @@ class Nota extends CI_Controller {
 		 $disciplinas = $consulta->select($filtro = '');
 		 $data['disciplinas'] = $disciplinas->result_array();
 			$i = -1;
+		
+		$this->load->view('home', $data);
 		 	 }
 	
 	#Lista as disciplinas
@@ -82,6 +84,13 @@ class Nota extends CI_Controller {
 		
 	}
 	
+	public function retorna(){
+	$filtro['loginAluno'] = $_SESSION['login']
+		$aluno = new Aluno_model();
+		$resultado = $aluno->listar_disciplinas($filtro);
+		$resultado = $aluno->listar_disciplinas($filtro)->result_array();
+}
+	
 	#Lista as disciplinas
 	public function editarDisciplina() {
 		//Restrição de acesso
@@ -96,6 +105,7 @@ class Nota extends CI_Controller {
 		 $data['disciplina'] = $d->result_array();
 	   $this->load->view('turma/editarDisciplina', $data);
 	 }
+	
 	
 	
 }

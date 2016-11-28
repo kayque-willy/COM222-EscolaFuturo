@@ -50,7 +50,7 @@
 								<tr>
 									<td><?php echo $row['id']?></td>
 									<td><?php echo $row['nome']?></td>
-									<td><a href="<?php echo base_url('retorna?id=').$row['id'] ?>">Detalhes</a></td>
+									<td><a href="<?php echo base_url('turma/editarDisciplina?id=').$row['id'] ?>">Detalhes</a></td>
 			
 								</tr>
 								<?php } ?>
@@ -63,11 +63,3 @@
 		<!-- /#page-content-wrapper -->
 
 	</div>
-	<!-- /#sidebar-wrapper -->
-	<!--Footer-->
-	<?php $this->load->view('layout/footer'); ?>
-	<!--Footer-->
-
-</body>
-
-</html>
