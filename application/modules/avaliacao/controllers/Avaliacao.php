@@ -10,6 +10,8 @@ class Avaliacao extends CI_Controller {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or (($_SESSION['tipoUsuario']!='admin') and ($_SESSION['tipoUsuario']!='professor'))) redirect(base_url().'home', 'refresh');
 		
+		$data['idTurma']=$idTurma;
+		
 		//Mensagem de resultado de alguma operação
 		if(isset($result)){
 			switch ($result){
@@ -208,7 +210,7 @@ class Avaliacao extends CI_Controller {
 					$questao->insert();
 				}
 				//Redireciona pra pagina de listagem
-				redirect(base_url('avaliacao/index/cad_sucesso/'.$dados['idTurma']));	
+				redirect(base_url('avaliacao/index/cad_sucesso/'.$idTurma));	
 			}else
 				redirect(base_url('avaliacao/index/cad_falha/'.$idTurma));	
 		}	
@@ -271,12 +273,27 @@ class Avaliacao extends CI_Controller {
 			redirect(base_url('avaliacao/index/exc_falha'));	
 	}	
 	
+	#Exclui uma questão que foi adicionada na avaliação
+	public function removerQuestaoAvaliacao($idQuestao='',$idAvaliacao=''){
+		
+		//Carrega a model
+		$this->load->model('avaliacao/avaliacao_questao_model');
+		$questao = new Avaliacao_questao_model($idAvaliacao,$idQuestao);
+		
+		//Remove a questão
+		if($questao->remove()){
+			//Redireciona pra pagina de listagem
+			redirect(base_url('avaliacao/editarAvaliacao/'.$idAvaliacao));	
+		}else
+			redirect(base_url('avaliacao/index/alt_falha/'.$idTurma));	
+	}
+	
 	# ------------ Editar ----------
 	
 	#Edita uma questão no banco de dados
 	public function editarQuestao($idQuestao=''){
-
-		//Cadastra a questão
+	
+		//Edita a questão
 		if(!empty($_POST)){
 			
 			$idQuestao = (empty($_POST['idQuestao'])) ? '' : $_POST['idQuestao']; 
@@ -324,6 +341,40 @@ class Avaliacao extends CI_Controller {
 	#Edita uma avaliação no banco de dados
 	public function editarAvaliacao($idAvaliacao=''){
 		
+		//Recebe os dados do formulario de cadastro
+		if(!empty($_POST)){
+		
+			$idAvaliacao = (empty($_POST['idAvaliacao'])) ? '' : $_POST['idAvaliacao']; 
+			$idTurma = (empty($_POST['idTurma'])) ? '' : $_POST['idTurma']; 
+			$loginProfessor = (empty($_POST['loginProfessor'])) ? '' : $_POST['loginProfessor']; 
+			$idDisciplina = (empty($_POST['idDisciplina'])) ? '' : $_POST['idDisciplina']; 
+			$nome = (empty($_POST['nome'])) ? '' : $_POST['nome']; 
+			$questoes = (empty($_POST['questoes'])) ? '' : $_POST['questoes']; 
+	
+			//Cadastra a avaliação
+			//Carrega a model
+			$this->load->model('avaliacao/avaliacao_model');
+			$avaliacao = new Avaliacao_model(null,$idTurma,$idDisciplina,$loginProfessor,$nome);
+			
+			//Se atualizar a avaliação, realiza o cadastro das questões na avaliação
+			if($avaliacao->update($idAvaliacao)){
+			
+				//Cadastra as questões
+				//Carrega a model
+				$this->load->model('avaliacao/avaliacao_questao_model');
+				
+				//Percorre o vetor do POST
+				foreach($questoes as $idQuestao){
+					$questao = new Avaliacao_questao_model($idAvaliacao,$idQuestao);
+					//Insere as questões
+					$questao->insert();
+				}
+				//Redireciona pra pagina de listagem
+				redirect(base_url('avaliacao/index/alt_sucesso/'.$dados['idTurma']));	
+			}else
+				redirect(base_url('avaliacao/index/alt_falha/'.$idTurma));	
+		}	
+  
 		//Recupera os dados para preencher o formulario de avaliação
 		if(!empty($idAvaliacao)){
 			//Carrega a model
@@ -338,8 +389,11 @@ class Avaliacao extends CI_Controller {
 			$data['avaliacao']=$data['avaliacao'][0];
 			$data['questoes']=$avaliacao->listar_questoes($filtro)->result();
 			
-			//print_r($data);
+			//Recupera as questões da disciplina que estão fora da avaliação
+			$filtro['idDisciplina']=$data['avaliacao']['idDisciplina'];
+			$data['questoes_fora'] = $avaliacao->questoes_fora($filtro)->result();
 			
+			//Carrega a view
 			if($data['avaliacao'])
 				$this->load->view('avaliacao/editarAvaliacao',$data);
 			else

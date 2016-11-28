@@ -63,7 +63,7 @@
 					<!--Lista de questões -->
 					<div class="col-lg-8 col-lg-offset-2">
 						<div class="accordion">
-							<?php $i = 0; foreach ($avaliacoes as $avaliacao) { $i ++; //var_dump($avaliacao)?>
+							<?php $i = 0; foreach ($avaliacoes as $avaliacao) { $i ++; ?>
 								<div class="accordion-group">
 									<div class="accordion-heading">
 										<table class="table table-striped table-condensed">
@@ -82,7 +82,7 @@
 										</tbody>
 										</table>
 									</div>
-									<div id="tab<?php echo $i?>" class="accordion-body collapse <?php ?>">
+									<div id="tab<?php echo $i?>" class="accordion-body collapse  <?php if($avaliacao['turma']->id == $idTurma and $avaliacao['turma']->idDisciplina==$idDisciplina) echo 'in'; ?>">
 										<div class="text-center">
 												<a class="btn btn-sm btn-success" href="<?php echo base_url('avaliacao/cadastrarAvaliacao')."?idTurma=".$avaliacao['turma']->id."&loginProfessor=".$avaliacao['turma']->loginProfessor."&idDisciplina=".$avaliacao['turma']->idDisciplina ?>">Adicionar avaliação</a>
 										</div>

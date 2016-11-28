@@ -23,7 +23,7 @@ class Avaliacao_model extends CI_Model{
      if(isset($this->idTurma))$this->db->where('idTurma',$this->idTurma);
      if(isset($this->idDisciplina)) $this->db->where('idDisciplina', $this->idDisciplina);
      if(isset($this->loginProfessor)) $this->db->where('loginProfessor', $this->loginProfessor);
-     if(isset($this->loginProfessor)) $this->db->where('nome', $this->nome);
+     if(isset($this->nome)) $this->db->where('nome', $this->nome);
      
      //Se não existir, cadastra a avaliação
      if(empty($this->db->get('avaliacao')->result())){
@@ -54,7 +54,7 @@ class Avaliacao_model extends CI_Model{
   public function update ($id='') {
      //Cria um vetor de valores para atualização
      $data = [];
-     if(isset($this->nome)) $data['nome'] = $this->id;
+     if(isset($this->nome)) $data['nome'] = $this->nome;
      if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
      if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina;
      if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor;
@@ -74,6 +74,7 @@ class Avaliacao_model extends CI_Model{
    if(!empty($filtro['idDisciplina'])) $this->db->where('idDisciplina', $filtro['idDisciplina']);
    if(!empty($filtro['loginProfessor'])) $this->db->where('loginProfessor', $filtro['loginProfessor']);
    if(!empty($filtro['nome'])) $this->db->where('nome', $filtro['nome']);
+   $this->db->order_by("nome", "asc");
    return $this->db->get('avaliacao');
   }
   
@@ -83,10 +84,24 @@ class Avaliacao_model extends CI_Model{
    if(!empty($filtro['id'])) $this->db->where('avaliacao.id', $filtro['id']);
     
    //Consultar inner join
-   $this->db->select('questao.*, avaliacao.nome as nomeAvaliacao, avaliacao.idTurma as turma');    
+   $this->db->select('questao.*, avaliacao.nome as nomeAvaliacao, avaliacao.idTurma as turma, avaliacao.id as idAvaliacao');    
    $this->db->from('avaliacao_questao');
    $this->db->join('avaliacao', 'avaliacao_questao.idAvaliacao = avaliacao.id','inner');
    $this->db->join('questao', 'avaliacao_questao.idQuestao = questao.id','inner');
+   return $this->db->get();
+  }  
+  
+  #Lista as questões que não estão na prova
+  public function questoes_fora($filtro='') {
+   //Adiciona clausula where
+    
+   //Consultar inner join
+   $this->db->select('questao.*, avaliacao.nome as nomeAvaliacao, avaliacao.idTurma as turma, avaliacao.id as idAvaliacao');    
+   $this->db->from('avaliacao');
+   $this->db->join('avaliacao_questao', 'avaliacao_questao.idAvaliacao = avaliacao.id AND avaliacao.id='.$filtro['id'].'','inner');
+   $this->db->join("questao", "avaliacao_questao.idQuestao = questao.id",'right',false);
+   $this->db->where('questao.idDisciplina', $filtro["idDisciplina"]);
+   $this->db->where('avaliacao.id is null',null,false);
    return $this->db->get();
   }  
 }
