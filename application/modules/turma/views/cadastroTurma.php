@@ -45,7 +45,7 @@
 							<div class="form-group">
 								<label for="idDisciplina">Disciplina:</label>
 								<select class="form-control" id="idDisciplina" name="idDisciplina">
-       								<option  disabled="disabled">Selecione</option>
+       								<option  disabled="disabled" selected='selected'>Selecione</option>
 									<?php foreach ($disciplinas as $row) { ?>
         								<option value="<?php echo $row['id'] ?>"><?php echo $row['id'] ?></option>
         						<?php } ?>
@@ -54,7 +54,7 @@
 							<div class="form-group">
 								<label for="loginProfessor">Professor:</label>
 								<select class="form-control" id="loginProfessor" name="loginProfessor">
-       					<option disabled="disabled">Selecione</option>
+       					<option disabled="disabled" selected='selected'>Selecione</option>
 									<?php foreach ($professores as $row) { ?>
         								<option value="<?php echo $row['login'] ?>"><?php echo $row['nome'] ?></option>
         						<?php } ?>
@@ -63,7 +63,7 @@
 							<div class="form-group">
 								<label for="loginAluno">Alunos:</label>
 								<select multiple class="form-control" id="loginAluno" name="loginAluno[]">
-       					<option>Selecione</option>
+       					<option disabled="disabled" selected='selected'>Selecione</option>
 									<?php foreach ($alunos as $row) { ?>
         								<option value="<?php echo $row['login'] ?>"><?php echo $row['nome'] ?></option>
         						<?php } ?>

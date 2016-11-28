@@ -268,8 +268,8 @@ ALTER TABLE `avaliacao_questao`
 -- Limitadores para a tabela `nota`
 --
 ALTER TABLE `nota`
-  ADD CONSTRAINT `aluno_avaliacao_fk` FOREIGN KEY (`loginAluno`) REFERENCES `aluno` (`login`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `avaliacao_nota_fk` FOREIGN KEY (`idAvaliacao`) REFERENCES `avaliacao` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `aluno_avaliacao_fk` FOREIGN KEY (`loginAluno`) REFERENCES `aluno` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `avaliacao_nota_fk` FOREIGN KEY (`idAvaliacao`) REFERENCES `avaliacao` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limitadores para a tabela `questao`

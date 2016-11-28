@@ -64,9 +64,11 @@ class Avaliacao extends CI_Controller {
 		
 		var_dump($data['avaliacoes']);
 		
+		echo 'QUE LOGIN BIZARRA DO CARAI';
+		
 	}
 	
-  #Lista todas as questões por disciplina
+	#Lista todas as questões por disciplina
 	public function questao($result='',$idDisciplina='') {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or (($_SESSION['tipoUsuario']!='admin') and ($_SESSION['tipoUsuario']!='professor'))) redirect(base_url().'home', 'refresh');
