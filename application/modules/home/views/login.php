@@ -3,10 +3,14 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
+	     <!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+		<!-- Navibar -->
+		<link rel="stylesheet" href="/assets/css/side.css">
+		<!-- jQuery library -->
+		<script src="/assets/js/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="/assets/js/bootstrap.min.js"></script>
     </head>
     <body style="height: 100%">
         <div class="section" style=" width: 100%;height: 100%; background-image: url('/assets/image/login.jpg'); background-size: 100%">

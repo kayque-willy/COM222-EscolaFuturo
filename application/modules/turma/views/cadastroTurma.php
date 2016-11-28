@@ -2,6 +2,8 @@
 <html>
 
 <head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Gerenciamento de Turmas</title>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
@@ -43,7 +45,7 @@
 							<div class="form-group">
 								<label for="idDisciplina">Disciplina:</label>
 								<select class="form-control" id="idDisciplina" name="idDisciplina">
-       					<option>Selecione</option>
+       								<option  disabled="disabled">Selecione</option>
 									<?php foreach ($disciplinas as $row) { ?>
         								<option value="<?php echo $row['id'] ?>"><?php echo $row['id'] ?></option>
         						<?php } ?>
@@ -52,7 +54,7 @@
 							<div class="form-group">
 								<label for="loginProfessor">Professor:</label>
 								<select class="form-control" id="loginProfessor" name="loginProfessor">
-       					<option>Selecione</option>
+       					<option disabled="disabled">Selecione</option>
 									<?php foreach ($professores as $row) { ?>
         								<option value="<?php echo $row['login'] ?>"><?php echo $row['nome'] ?></option>
         						<?php } ?>
