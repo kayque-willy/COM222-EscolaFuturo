@@ -62,9 +62,8 @@ class Avaliacao extends CI_Controller {
 			$data['avaliacoes'][] = $avaliacoes;
 		}
 		
-		var_dump($data['avaliacoes']);
-		
-		echo 'QUE LOGIN BIZARRA DO CARAI';
+		//Carrega a view 
+		$this->load->view('avaliacao/listarAvaliacao',$data);
 		
 	}
 	
@@ -186,6 +185,23 @@ class Avaliacao extends CI_Controller {
 				redirect(base_url('avaliacao/questao/exc_falha'));	
 		}else
 			redirect(base_url('avaliacao/questao/exc_falha'));	
+	}	
+	
+	#Exclui uma avaliação do banco de dados
+	public function excluirAvaliacao($idAvaliacao=''){
+
+		if(!empty($idAvaliacao)){
+			//Carrega a model
+			$this->load->model('avaliacao/avaliacao_model');
+			$avaliacao = new Avaliacao_model($idAvaliacao);
+
+			//Remove o resgistro no banco
+			if($avaliacao->remove())
+				redirect(base_url('avaliacao/index/exc_sucesso'));
+			else
+				redirect(base_url('avaliacao/index/exc_falha'));	
+		}else
+			redirect(base_url('avaliacao/index/exc_falha'));	
 	}	
 	
 	# ------------ Editar ----------
