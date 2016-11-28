@@ -18,15 +18,27 @@ class Avaliacao_model extends CI_Model{
   
   #Insere uma nova avaliacao
   public function insert(){
-     //Cria um vetor de valores para inserção
-     $data = [];
-     if(isset($this->id)) $data['id'] = $this->id;
-     if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
-     if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina;
-     if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor;
-     if(isset($this->nome)) $data['nome'] = $this->nome;
-    
-     return $this->db->insert('avaliacao',$data);
+     
+     //Verifica se ja existe uma avaliação com estes atributos 
+     if(isset($this->idTurma))$this->db->where('idTurma',$this->idTurma);
+     if(isset($this->idDisciplina)) $this->db->where('idDisciplina', $this->idDisciplina);
+     if(isset($this->loginProfessor)) $this->db->where('loginProfessor', $this->loginProfessor);
+     if(isset($this->loginProfessor)) $this->db->where('nome', $this->nome);
+     
+     //Se não existir, cadastra a avaliação
+     if(empty($this->db->get('avaliacao')->result())){
+       //Cria um vetor de valores para inserção
+       $data = [];
+       if(isset($this->id)) $data['id'] = $this->id;
+       if(isset($this->idTurma)) $data['idTurma'] = $this->idTurma;
+       if(isset($this->idDisciplina)) $data['idDisciplina'] = $this->idDisciplina;
+       if(isset($this->loginProfessor)) $data['loginProfessor'] = $this->loginProfessor;
+       if(isset($this->nome)) $data['nome'] = $this->nome;
+      
+       return $this->db->insert('avaliacao',$data);
+     }else
+        return false;
+     
   }
   
   #Desativa uma avaliacao de acordo com a chave primária

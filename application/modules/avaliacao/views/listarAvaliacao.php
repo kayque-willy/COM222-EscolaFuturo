@@ -84,7 +84,7 @@
 									</div>
 									<div id="tab<?php echo $i?>" class="accordion-body collapse <?php ?>">
 										<div class="text-center">
-												<a class="btn btn-sm btn-success" href="<?php echo base_url('avaliacao/cadastrarAvaliacao/')."/".$avaliacao['turma']->id."/".$avaliacao['turma']->loginProfessor."/".$avaliacao['turma']->idDisciplina ?>">Adicionar avaliação</a>
+												<a class="btn btn-sm btn-success" href="<?php echo base_url('avaliacao/cadastrarAvaliacao')."?idTurma=".$avaliacao['turma']->id."&loginProfessor=".$avaliacao['turma']->loginProfessor."&idDisciplina=".$avaliacao['turma']->idDisciplina ?>">Adicionar avaliação</a>
 										</div>
 										<div class="accordion-inner">
 											<?php if(!empty($avaliacao['avaliacoes'])){ ?>
@@ -110,7 +110,7 @@
 													</tbody>
 												</table>
 											<?php }else{ ?>
-												<h4 class="alert alert-info text-center">Nenhuma questão cadastrada para esta disciplina</h4>
+												<h4 class="alert alert-info text-center">Nenhuma avaliação cadastrada para esta disciplina</h4>
 											<?php } ?>
 										</div>
 									</div>

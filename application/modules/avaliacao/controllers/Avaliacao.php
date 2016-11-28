@@ -6,7 +6,7 @@ class Avaliacao extends CI_Controller {
 	# ------------ Visualizar ----------
 	
 	#Lista todas as avaliações
-	public function index($result=''){
+	public function index($result='',$idTurma=''){
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or (($_SESSION['tipoUsuario']!='admin') and ($_SESSION['tipoUsuario']!='professor'))) redirect(base_url().'home', 'refresh');
 		
@@ -166,6 +166,73 @@ class Avaliacao extends CI_Controller {
 		
 		//Carrega a view
 		$this->load->view('avaliacao/cadastrarQuestao',$data);
+	}
+	
+	#Cadastra uma questão no banco de dados
+	public function cadastrarAvaliacao(){
+		
+		//Recebe os dados do formulario de cadastro
+		if(!empty($_POST)){
+			$idTurma = (empty($_POST['idTurma'])) ? '' : $_POST['idTurma']; 
+			$loginProfessor = (empty($_POST['loginProfessor'])) ? '' : $_POST['loginProfessor']; 
+			$idDisciplina = (empty($_POST['idDisciplina'])) ? '' : $_POST['idDisciplina']; 
+			$nome = (empty($_POST['nome'])) ? '' : $_POST['nome']; 
+			$questoes = (empty($_POST['questoes'])) ? '' : $_POST['questoes']; 
+	
+			//Cadastra a avaliação
+			//Carrega a model
+			$this->load->model('avaliacao/avaliacao_model');
+			$avaliacao = new Avaliacao_model(null,$idTurma,$idDisciplina,$loginProfessor,$nome);
+			
+			//Se cadastrar a valiação, realiza o cadastro das questões na avaliação
+			if($avaliacao->insert()){
+				//Recupera o id da avaliação cadastrada
+				$filtro['idTurma'] = $idTurma;
+				$filtro['idDisciplina'] = $idDisciplina;
+				$filtro['loginProfessor'] = $loginProfessor;
+				$filtro['nome'] = $nome;
+				
+				//Recupera o id
+				$consulta = new Avaliacao_model();
+				$idAvaliacao = $consulta->select($filtro)->result();
+				$idAvaliacao=$idAvaliacao[0]->id;
+				
+				//Cadastra as questões
+				//Carrega a model
+				$this->load->model('avaliacao/avaliacao_questao_model');
+				
+				//Percorre o vetor do POST
+				foreach($questoes as $idQuestao){
+					$questao = new Avaliacao_questao_model($idAvaliacao,$idQuestao);
+					//Insere as questões
+					$questao->insert();
+				}
+				//Redireciona pra pagina de listagem
+				redirect(base_url('avaliacao/index/cad_sucesso/'.$dados['idTurma']));	
+			}else
+				redirect(base_url('avaliacao/index/cad_falha/'.$idTurma));	
+		}	
+  
+		if(!empty($_GET)){
+		  //Recebe os parâmetros
+		  $dados['idTurma']=$_GET['idTurma'];
+		  $dados['loginProfessor']=$_GET['loginProfessor'];
+		  $dados['idDisciplina']=$_GET['idDisciplina'];
+		  $data['dados']=$dados;
+
+		  //Lista as questões da prova pela disciplina
+		  //Carrega a model
+		  $this->load->model('avaliacao/questao_model');
+		  $consulta = new Questao_model();
+		  
+		  //Filtra por id da displina
+		  $filtro['idDisciplina'] = $dados['idDisciplina'];
+		  $data['questoes'] = $consulta->select($filtro)->result();
+
+		  //Carrega a view
+		  $this->load->view('avaliacao/cadastrarAvaliacao',$data);
+		}else
+			redirect(base_url('avaliacao/index/cad_falha/'.$idTurma));	
 	}
 	
 	# ------------ Excluir ----------
