@@ -409,6 +409,7 @@ class Avaliacao extends CI_Controller {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario'])) redirect(base_url().'home', 'refresh');
 		
+		//Recupera o id da turma para abrir o accordion
 		$data['idTurma']=$idTurma;
 		
 		//Carrega as models
@@ -426,7 +427,6 @@ class Avaliacao extends CI_Controller {
 			$filtro['idTurma'] = $turma->idTurma;
 			$filtro['idDisciplina'] = $turma->idDisciplina;
 			$filtro['loginProfessor'] = $turma->loginProfessor;
-			$filtro['provaAfazer']=true;
 			$consulta = new Aluno_model();
 	
 			//Adiciona as avaliaçõse e a turman no vetor
@@ -435,8 +435,6 @@ class Avaliacao extends CI_Controller {
 			
 			$data['avaliacoes'][] = $avaliacoes;
 		}
-		
-		var_dump($data['avaliacoes'][1]);
 		
 		//Carrega a view 
 		$this->load->view('avaliacao/alunoAvaliacao',$data);

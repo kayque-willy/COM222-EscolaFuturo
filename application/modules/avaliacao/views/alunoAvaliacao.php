@@ -73,7 +73,7 @@
 													<b>
 													<a class="accordion-toggle" style="decoration:none;" data-toggle="collapse" href="#tab<?php echo $i?>" >
 														<h4 class="text-center">
-															[<?php echo $avaliacao['turma']->idDisciplina ?>] - <?php echo $avaliacao['turma']->idTurma ?>
+															[<?php echo $avaliacao['turma']->idDisciplina ?> ] - <?php echo $avaliacao['turma']->nomeDisciplina ?> (<?php echo $avaliacao['turma']->idTurma ?>)
 														</h4>
 													</a>
 													</b>
@@ -83,27 +83,32 @@
 										</table>
 									</div>
 									<div id="tab<?php echo $i?>" class="accordion-body collapse  <?php if($avaliacao['turma']->idTurma == $idTurma and $avaliacao['turma']->idDisciplina==$idDisciplina) echo 'in'; ?>">
-										<div class="text-center">
-												<a class="btn btn-sm btn-success" href="<?php echo base_url('avaliacao/cadastrarAvaliacao')."?idTurma=".$avaliacao['turma']->idTurma."&loginProfessor=".$avaliacao['turma']->loginProfessor."&idDisciplina=".$avaliacao['turma']->idDisciplina ?>">Adicionar avaliação</a>
-										</div>
 										<div class="accordion-inner">
 											<?php if(!empty($avaliacao['avaliacoes'])){ ?>
 												<table class="table table-striped">
 													<thead>
 														<tr>
 															<th>Avaliações desta disciplina</th>
-															<th class="text-center">Ação</th>
+															<th class="text-center">Status</th>
 														</tr>
 													</thead>
 													<tbody>
 														<?php foreach($avaliacao['avaliacoes'] as $aval) {  ?>
 														<tr>
 															<td>
-																<?php echo $aval->nome  ?>
+																<b><?php echo $aval->nome  ?></b>
 															</td>
 															<td class="text-center">
-																<a class="btn btn-xs btn-info" href="<?php echo base_url('avaliacao/editarAvaliacao/')."/".$aval->id ?>">Editar</a> 
-																<a class="btn btn-xs btn-danger" href="<?php echo base_url('avaliacao/excluirAvaliacao/')."/".$aval->id ?>">Excluir</a>
+																<?php if(empty($aval->nota)){ ?>
+																	<a class="btn btn-md btn-info" href="<?php echo base_url('avaliacao/fazerAvaliacao/')."/".$aval->id ?>">Fazer avaliação</a> 
+																<?php }else{ ?>
+																	<?php if(floatval($aval->nota)>=6){ ?>
+																		<p class="alert alert-success">Nota: <?php echo $aval->nota ?> - Aprovado</p>
+																	<?php }else{ ?>
+																		<p class="alert alert-danger">Nota: <?php echo $aval->nota ?> - Reprovado</p>
+																	<?php } ?>
+																
+																<?php } ?>
 															</td>
 														</tr>
 														<?php } ?>
