@@ -16,66 +16,14 @@
 </head>
 
 <body>
-	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			var trigger = $('.hamburger'),
-				overlay = $('.overlay'),
-				isClosed = false;
 
-			trigger.click(function() {
-				hamburger_cross();
-			});
-
-			function hamburger_cross() {
-
-				if (isClosed == true) {
-					overlay.hide();
-					trigger.removeClass('is-open');
-					trigger.addClass('is-closed');
-					isClosed = false;
-				} else {
-					overlay.show();
-					trigger.removeClass('is-closed');
-					trigger.addClass('is-open');
-					isClosed = true;
-				}
-			}
-
-			$('[data-toggle="offcanvas"]').click(function() {
-				$('#wrapper').toggleClass('toggled');
-			});
-		});
-	</script>
 	<!-- Sidebar -->
 	<div id="wrapper">
 		<div class="overlay"></div>
 
-		<!-- Sidebar -->
-		<nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-			<ul class="nav sidebar-nav">
-				<li class="sidebar-brand">
-					<a href="#">Home</a>
-				</li>
-				<li>
-					<a href="#">Gerenciamento de Notas</a>
-				</li>
-				<li>
-					<a href="#">Gerenciamento de Avaliações</a>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gerenciamento de Turmas <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						<li class="dropdown-header">Opções</li>
-						<li><a href="<?php echo base_url('turma/aluno') ?>">Alunos</a></li>
-						<li><a href="<?php echo base_url('turma/disciplina') ?>">Disciplinas</a></li>
-						<li><a href="<?php echo base_url('turma/professor') ?>">Professores</a></li>
-						<li><a href="<?php echo base_url('turma') ?>">Turmas</a></li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
-		<!-- /#sidebar-wrapper -->
+		<!--Sidebar-->
+		<?php $this->load->view('layout/sidebar'); ?>
+	    <!--Sidebar-->
 
 		<!-- Page Content -->
 		<div id="page-content-wrapper">

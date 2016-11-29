@@ -23,7 +23,7 @@
 
 		<!--Sidebar-->
 		<?php $this->load->view('layout/sidebar'); ?>
-	  <!--Sidebar-->
+	    <!--Sidebar-->
 		
 		<!-- /#sidebar-wrapper -->
 
