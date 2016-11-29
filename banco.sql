@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `questao` (
   `r2` varchar(255) NOT NULL,
   `r3` varchar(255) NOT NULL,
   `r4` varchar(255) NOT NULL,
-  `repostaCerta` varchar(4) NOT NULL,
+  `respostaCerta` varchar(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `disciplina_questao_fk` (`idDisciplina`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
