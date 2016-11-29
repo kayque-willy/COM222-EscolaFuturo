@@ -99,7 +99,7 @@
 																<b><?php echo $aval->nome  ?></b>
 															</td>
 															<td class="text-center">
-																<?php if(empty($aval->nota)){ ?>
+																<?php if($aval->nota==null){ ?>
 																	<a class="btn btn-md btn-info" href="<?php echo base_url('avaliacao/fazerAvaliacao/')."/".$aval->id ?>">Fazer avaliação</a> 
 																<?php }else{ ?>
 																	<?php if(floatval($aval->nota)>=6){ ?>
