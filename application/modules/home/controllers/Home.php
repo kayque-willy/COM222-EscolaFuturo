@@ -89,6 +89,10 @@ class Home extends CI_Controller {
 	
 	#Pagina de boas vindas
 	public function boasVindas(){
+	
+	  //Redireciona para a home se o usuario estiver logado
+	  if(empty($_SESSION['login'])) redirect('home/index');
+	  
 	  $this->load->view('home/home.php');
 	}
 	
