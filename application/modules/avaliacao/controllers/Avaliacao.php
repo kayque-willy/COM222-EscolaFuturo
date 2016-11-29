@@ -440,4 +440,46 @@ class Avaliacao extends CI_Controller {
 		$this->load->view('avaliacao/alunoAvaliacao',$data);
 	}
 	
+	#Realiza uma avaliação
+	public function fazerAvaliacao($idAvaliacao=''){
+		
+		//Recebe os dados do formulario via post
+		if($_POST){
+			
+			//Corrige a avaliação
+			
+		}
+		
+		//Restrição de acesso
+		if(!isset($_SESSION['tipoUsuario'])) redirect(base_url().'avaliacao/listarAvaliacoes', 'refresh');
+		
+		//Verifica se o aluno ja realizou a avaliação
+		//Carrega a model
+		$this->load->model('nota/nota_model');
+		
+		//Filtra a nota pelo login do aluno e id da avaliação
+		$consulta = new Nota_model();
+		$filtro['loginAluno']=$_SESSION['login'];
+		$filtro['idAvaliacao']=$idAvaliacao;
+		
+		//Verifica se o aluno ja realizou a avaliação
+		if(empty($consulta->select($filtro)->result())){
+			
+			//Recupera a avaliação
+			//Carrega a model
+			$this->load->model('avaliacao/avaliacao_model');
+			
+			//Filtra a avaliação pelo id 
+			$consulta = new Avaliacao_model();
+			$filtro['id']=$idAvaliacao;
+			
+			//Recupera a avaliação
+			$data['avaliacoes'] = $consulta->listar_questoes($filtro)->result();
+			
+			//Carrega a view 
+			$this->load->view('avaliacao/avaliacao',$data);
+		}else
+			redirect(base_url().'avaliacao/listarAvaliacoes', 'refresh');
+	}
+	
 }
