@@ -402,4 +402,44 @@ class Avaliacao extends CI_Controller {
 			redirect(base_url('avaliacao/index/alt_falha'));	
 	}
 	
+	# ------------ Aluno ----------
+	
+	#Lista as avaliações disponíveis para o aluno
+	public function listarAvaliacoes($idTurma=''){
+		//Restrição de acesso
+		if(!isset($_SESSION['tipoUsuario'])) redirect(base_url().'home', 'refresh');
+		
+		$data['idTurma']=$idTurma;
+		
+		//Carrega as models
+		$this->load->model('turma/aluno_model');
+		
+		//Consulta as turmas do aluno
+		$consulta = new Aluno_model();
+		$filtro['loginAluno']=$_SESSION['login'];
+		$turmas=$consulta->listar_turmas($filtro)->result();
+	
+		//Consulta as avaliações de cada turma
+		$data['avaliacoes'] = [];
+		foreach($turmas as $turma){
+			$filtro['loginAluno'] = $turma->loginAluno;
+			$filtro['idTurma'] = $turma->idTurma;
+			$filtro['idDisciplina'] = $turma->idDisciplina;
+			$filtro['loginProfessor'] = $turma->loginProfessor;
+			$filtro['provaAfazer']=true;
+			$consulta = new Aluno_model();
+	
+			//Adiciona as avaliaçõse e a turman no vetor
+			$avaliacoes['turma'] = $turma;
+			$avaliacoes['avaliacoes'] = $consulta->listar_provas($filtro)->result();
+			
+			$data['avaliacoes'][] = $avaliacoes;
+		}
+		
+		var_dump($data['avaliacoes'][1]);
+		
+		//Carrega a view 
+		$this->load->view('avaliacao/alunoAvaliacao',$data);
+	}
+	
 }

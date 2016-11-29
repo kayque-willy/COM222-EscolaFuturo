@@ -80,6 +80,7 @@ class Aluno_model extends CI_Model{
     //Consultar inner join
    $this->db->select('avaliacao.*,nota.loginAluno,nota.nota');    
    $this->db->from('avaliacao');
+   $this->db->order_by("avaliacao.nome", "asc");
    return $this->db->get();
   }
   

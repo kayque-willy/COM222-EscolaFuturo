@@ -84,7 +84,7 @@
 								}else{ 
 								?>
 									<div class="form-group">
-										<h3 class="alert alert-info text-center">Não existem questões cadastradas para essa disciplina!</h3>
+										<h3 class="alert alert-info text-center">Não existem questões disponíveis para essa disciplina!</h3>
 									</div>
 								<?php }	?>
 								<button type="submit" class="btn btn-success">Cadastrar avaliação</button>

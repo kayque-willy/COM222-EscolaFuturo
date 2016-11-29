@@ -104,7 +104,7 @@
 								}else{ 
 								?>
 									<div class="form-group">
-										<h3 class="alert alert-info text-center">Não existem questões cadastradas para essa avaliação!</h3>
+										<h3 class="alert alert-info text-center">Não existem questões disponíveis para essa avaliação!</h3>
 									</div>
 								<?php }	?>
 								<button type="submit" class="btn btn-primary">Atualizar avaliação</button>
