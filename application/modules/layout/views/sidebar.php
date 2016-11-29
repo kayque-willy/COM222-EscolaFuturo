@@ -7,6 +7,7 @@
 				<li>
 					<a href="<?php echo base_url('nota') ?>">Gerenciamento de Notas</a>
 				</li>
+				<hr>
 				<li class="dropdown">
 				 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gerenciamento de Avaliações<span class="caret"></span></a>
 				  <ul class="dropdown-menu" role="menu">
@@ -15,6 +16,7 @@
 						<li><a href="<?php echo base_url('avaliacao') ?>">Avaliações</a></li>
 					</ul>
 				</li>
+				<hr>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Gerenciamento de Turmas <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
@@ -25,18 +27,21 @@
 						<li><a href="<?php echo base_url('turma') ?>">Turmas</a></li>
 					</ul>
 				</li>
-				<li class="sidebar-brand">
-					<a href="#">Aluno</a>
-				</li>
-				<li>
-					<a href="<?php echo base_url('avaliacao/listarAvaliacoes') ?>">Consultar avaliações</a>
-				</li>
-				<li>
-					<a href="<?php echo base_url('nota') ?>">Consultar notas</a>
-				</li>
-				<li>
-					<a href="<?php echo base_url('nota') ?>">Consultar histórico</a>
-				</li>
+				<hr>
+				<?php if($_SESSION['tipoUsuario']=='aluno'){ ?>
+					<li class="sidebar-brand">
+						<a href="#">Aluno</a>
+					</li>
+					<li>
+						<a href="<?php echo base_url('avaliacao/listarAvaliacoes') ?>">Consultar avaliações</a>
+					</li>
+					<li>
+						<a href="<?php echo base_url('nota') ?>">Consultar notas</a>
+					</li>
+					<li>
+						<a href="<?php echo base_url('nota') ?>">Consultar histórico</a>
+					</li>
+				<?php } ?>
         		<li class="divider"></li>
 				<li>
 					<a href="<?php echo base_url('home/logoff') ?>">Sair</a>

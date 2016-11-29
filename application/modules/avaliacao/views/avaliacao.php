@@ -88,6 +88,9 @@
 										<h3 class="alert alert-info text-center">Não existem questões adicionanadas nesta avaliação!</h3>
 									</div>
 								<?php }	?>
+								<!--Ids hidden-->
+								<input readonly type="hidden" name="QuantidadeQuestoes" value="<?php echo $j ?>">
+								<!--Ids hidden-->
 								<div class='text-center'>
 									<button type="submit" class="btn btn-success">Enviar avaliação</button>
 									<a href="<?php echo base_url('avaliacao/listarAvaliacoes') ?>" type="submit" class="btn btn-default">Cancelar</a>

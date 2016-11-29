@@ -39,6 +39,10 @@ class Avaliacao extends CI_Controller {
 					$data['falha']=true;
 					$data['msg'] = 'Falha ao remover a avaliação!';
 					break;
+				case 'erro_aluno':
+					$data['falha']=true;
+					$data['msg'] = 'A avaliação não pode ser removida porque ja foi feita por um aluno!';
+					break;
 			}
 		}
 		
@@ -260,15 +264,24 @@ class Avaliacao extends CI_Controller {
 	public function excluirAvaliacao($idAvaliacao=''){
 
 		if(!empty($idAvaliacao)){
-			//Carrega a model
-			$this->load->model('avaliacao/avaliacao_model');
-			$avaliacao = new Avaliacao_model($idAvaliacao);
-
-			//Remove o resgistro no banco
-			if($avaliacao->remove())
-				redirect(base_url('avaliacao/index/exc_sucesso'));
-			else
-				redirect(base_url('avaliacao/index/exc_falha'));	
+			//Verifica se algum aluno fez a avaliação
+			$this->load->model('nota/nota_model');
+			$nota = new Nota_model();
+			$filtro['idAvaliacao']=$idAvaliacao;
+			
+			//Se não houver nenhum aluno que tenha feito a avaliação, exclui ela do banco
+			if(empty($nota->select($filtro)->result())){
+				//Carrega a model
+				$this->load->model('avaliacao/avaliacao_model');
+				$avaliacao = new Avaliacao_model($idAvaliacao);
+	
+				//Remove o resgistro no banco
+				if($avaliacao->remove())
+					redirect(base_url('avaliacao/index/exc_sucesso'));
+				else
+					redirect(base_url('avaliacao/index/exc_falha'));	
+			}else
+				redirect(base_url('avaliacao/index/erro_aluno'));	
 		}else
 			redirect(base_url('avaliacao/index/exc_falha'));	
 	}	
@@ -409,6 +422,20 @@ class Avaliacao extends CI_Controller {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario'])) redirect(base_url().'home', 'refresh');
 		
+		//Mensagem de resultado de alguma operação
+		if(isset($_GET['result'])){
+			switch ($_GET['result']){
+				case 'sucesso': 
+					$data['sucesso']=true;
+					$data['msg'] = 'Avaliação realizada com sucesso!';
+					break;
+				case 'falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao realizar a avaliação!';
+					break;
+			}
+		}
+		
 		//Recupera o id da turma para abrir o accordion
 		$data['idTurma']=$idTurma;
 		
@@ -438,6 +465,7 @@ class Avaliacao extends CI_Controller {
 		
 		//Carrega a view 
 		$this->load->view('avaliacao/alunoAvaliacao',$data);
+	
 	}
 	
 	#Realiza uma avaliação
@@ -445,9 +473,31 @@ class Avaliacao extends CI_Controller {
 		
 		//Recebe os dados do formulario via post
 		if($_POST){
-			
+		
+			//Recebe os valores do POST
+			$quantidadeQuestoes= (integer) $_POST['QuantidadeQuestoes'];
+			$idAvaliacao=$_POST['idAvaliacao'];
+			$loginAluno=$_SESSION['login'];
+
 			//Corrige a avaliação
+			$acertos=0;
+			for($i=1;$i<=$quantidadeQuestoes;$i++){
+				if($_POST['q'.$i]==$_POST['correta'.$i]) $acertos++;
+			}
 			
+			//Calcula a nota
+			if($acertos!=0) $nota=($acertos/$quantidadeQuestoes)*10;
+			else $nota=$acertos;
+			
+			//Armazena a nota do aluno
+			//Carrega a model
+			$this->load->model('nota/nota_model');
+			$nota = new Nota_model($loginAluno,$idAvaliacao,$nota);
+			
+			if($nota->insert())
+				redirect(base_url().'avaliacao/listarAvaliacoes?result=sucesso', 'refresh');
+			else
+				redirect(base_url().'avaliacao/listarAvaliacoes?result=falha', 'refresh');
 		}
 		
 		//Restrição de acesso
