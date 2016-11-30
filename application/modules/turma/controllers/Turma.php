@@ -78,6 +78,36 @@ class Turma extends CI_Controller {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or ($_SESSION['tipoUsuario']!='admin')) redirect(base_url().'home', 'refresh');
 		
+		//Mensagem de resultado de alguma operação
+		if(isset($result)){
+			switch ($result){
+				case 'cad_sucesso': 
+					$data['sucesso']=true;
+					$data['msg'] = 'Disciplina cadastrada com sucesso!';
+					break;
+				case 'cad_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao cadastrar a Disciplina!';
+					break;
+				case 'alt_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Disciplina atualizada com sucesso!';
+					break;
+				case 'alt_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao atualizar a Disciplina!';
+					break;
+				case 'exc_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Disciplina excluida com sucesso!';
+					break;
+				case 'exc_falha':
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao remover a Disciplina!';
+					break;
+			}
+		}
+		
 		 $this->load->model('Disciplina_model');
 		 $consulta = new Disciplina_model();
 		 $disciplinas = $consulta->select($filtro = '');
@@ -89,6 +119,38 @@ class Turma extends CI_Controller {
 	public function professor($result='') {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or ($_SESSION['tipoUsuario']!='admin')) redirect(base_url().'home', 'refresh');
+		
+		//Mensagem de resultado de alguma operação
+		if(isset($result)){
+			switch ($result){
+				case 'cad_sucesso': 
+					$data['sucesso']=true;
+					$data['msg'] = 'Professor cadastrada com sucesso!';
+					break;
+				case 'cad_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao cadastrar a Professor!';
+					break;
+				case 'alt_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Professor atualizada com sucesso!';
+					break;
+				case 'alt_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao atualizar a Professor!';
+					break;
+				case 'exc_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Professor excluida com sucesso!';
+					break;
+				case 'exc_falha':
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao remover a Professor!';
+					break;
+			}
+		}
+		
+		
 		
 		 $this->load->model('Professor_model');
 		 $consulta = new Professor_model();
@@ -107,27 +169,27 @@ class Turma extends CI_Controller {
 			switch ($result){
 				case 'cad_sucesso': 
 					$data['sucesso']=true;
-					$data['msg'] = 'Turma cadastrada com sucesso!';
+					$data['msg'] = 'Aluno cadastrada com sucesso!';
 					break;
 				case 'cad_falha': 
 					$data['falha']=true;
-					$data['msg'] = 'Falha ao cadastrar a Turma!';
+					$data['msg'] = 'Falha ao cadastrar a Aluno!';
 					break;
 				case 'alt_sucesso':
 					$data['sucesso']=true;
-					$data['msg'] = 'Turma atualizada com sucesso!';
+					$data['msg'] = 'Aluno atualizada com sucesso!';
 					break;
 				case 'alt_falha': 
 					$data['falha']=true;
-					$data['msg'] = 'Falha ao atualizar a Turma!';
+					$data['msg'] = 'Falha ao atualizar a Aluno!';
 					break;
 				case 'exc_sucesso':
 					$data['sucesso']=true;
-					$data['msg'] = 'Turma excluida com sucesso!';
+					$data['msg'] = 'Aluno excluida com sucesso!';
 					break;
 				case 'exc_falha':
 					$data['falha']=true;
-					$data['msg'] = 'Falha ao remover a Turma!';
+					$data['msg'] = 'Falha ao remover a Aluno!';
 					break;
 			}
 		}
@@ -164,13 +226,12 @@ class Turma extends CI_Controller {
 			//Insere o repasse no banco
 			if($disciplina->insert()){
 				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
-				$this->load->view('turma/sucesso');
+				redirect(base_url('turma/disciplina/cad_sucesso'));
 			}else{
 				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-				$this->load->view('turma/falha');
+				redirect(base_url('turma/disciplina/cad_falha'));
 			}
 		}
-		
 	}
 	
 	#Cria um nova Professor
@@ -195,10 +256,10 @@ class Turma extends CI_Controller {
 			//Insere o repasse no banco
 			if($professor->insert()){
 				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
-				$this->load->view('turma/sucesso');
+				redirect(base_url('turma/professor/cad_sucesso'));
 			}else{
 				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-				$this->load->view('turma/falha');
+				redirect(base_url('turma/professor/cad_falha'));
 			}
 		}
 		
@@ -226,10 +287,10 @@ class Turma extends CI_Controller {
 			//Insere o repasse no banco
 			if($aluno->insert()){
 				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
-				$this->load->view('turma/sucesso');
+				redirect(base_url('turma/aluno/cad_sucesso'));
 			}else{
 				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-				$this->load->view('turma/falha');
+				redirect(base_url('turma/aluno/cad_falha'));
 			}
 		}
 		
@@ -283,7 +344,7 @@ class Turma extends CI_Controller {
 			$aluno = new Aluno_model($_GET['login'],'','');
 			
 			if($aluno->remove()){
-				$this->aluno();
+				$this->aluno('exc_sucesso');
 			}else{
 				 $this->load->model('Aluno_model');
 				 $consulta = new Aluno_model();
@@ -302,7 +363,7 @@ class Turma extends CI_Controller {
 			$professor = new Professor_model($_GET['login'],'','');
 			
 			if($professor->remove()){
-				$this->professor();
+				$this->professor('exc_sucesso');
 			}else{
 				 $this->load->model('Professor_model');
 				 $consulta = new Professor_model();
@@ -321,7 +382,7 @@ class Turma extends CI_Controller {
 			$disciplina = new Disciplina_model($_GET['id'],'');
 			
 			if($disciplina->remove()){
-				$this->disciplina();
+				$this->disciplina('exc_sucesso');
 			}else{
 				 $this->load->model('Disciplina_model');
 				 $consulta = new Disciplina_model();
@@ -386,10 +447,10 @@ class Turma extends CI_Controller {
 			//Insere o repasse no banco
 			if($disciplina->update($_POST['id'])){
 				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
-				$this->load->view('turma/sucesso');
+				redirect(base_url('turma/disciplina/alt_sucesso'));
 			}else{
 				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-				$this->load->view('turma/falha');
+				redirect(base_url('turma/disciplina/alt_falha'));
 			}
 		}
 		
@@ -417,10 +478,10 @@ class Turma extends CI_Controller {
 			//Insere o repasse no banco
 			if($professor->update($_POST['login'])){
 				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
-				$this->load->view('turma/sucesso');
+				redirect(base_url('turma/professor/alt_sucesso'));
 			}else{
 				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-				$this->load->view('turma/falha');
+				redirect(base_url('turma/professor/alt_falha'));
 			}
 		}
 		
@@ -448,10 +509,10 @@ class Turma extends CI_Controller {
 			//Insere o repasse no banco
 			if($aluno->update($login)){
 				//Se a operação for bem sucedida, redireciona com mensagem de sucesso
-				$this->load->view('turma/sucesso');
+				redirect(base_url('turma/aluno/alt_sucesso'));
 			}else{
 				//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-				$this->load->view('turma/falha');
+				redirect(base_url('turma/aluno/alt_falha'));
 			}
 		}
 		
@@ -487,7 +548,7 @@ class Turma extends CI_Controller {
 						$aluno = new Turma_aluno_model($a, $turma, $disciplina, $professor);
 						$aluno->insert();
 				 }
-				 redirect(base_url('turma/index/cad_sucesso'));
+				 redirect(base_url('turma/index/alt_sucesso'));
 			}
 		}
 	}
