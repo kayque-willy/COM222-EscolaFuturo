@@ -71,15 +71,16 @@ class Professor_model extends CI_Model{
   public function listar_notas($filtro='') {
    //Adiciona clausula where
    if(!empty($filtro['loginAluno'])) $this->db->where('nota.loginAluno', $filtro['loginAluno']);
-   if(!empty($filtro['idTurma'])) $this->db->where('avaliacao.idTurma', $filtro['idTurma']);
-   if(!empty($filtro['idDisciplina'])) $this->db->where('avaliacao.idDisciplina', $filtro['idDisciplina']);
-   if(!empty($filtro['loginProfessor'])) $this->db->where('avaliacao.loginProfessor', $filtro['loginProfessor']);
+   //if(!empty($filtro['idTurma'])) $this->db->where('', );
+   //if(!empty($filtro['idDisciplina'])) $this->db->where('', );
+   //if(!empty($filtro['loginProfessor'])) $this->db->where('',);
     
    //Consultar inner join
    $this->db->select('avaliacao.nome as nomeAvaliacao, nota.loginAluno, nota.idAvaliacao, nota.nota, aluno.nome as nomeAluno');    
    $this->db->from('avaliacao');
-   $this->db->join('nota', 'avaliacao.id = nota.idAvaliacao','inner');
+   $this->db->join('nota', "avaliacao.id = nota.idAvaliacao  AND avaliacao.idTurma ='".$filtro['idTurma']."' AND avaliacao.idDisciplina='".$filtro['idDisciplina']."' AND avaliacao.loginProfessor ='".$filtro['loginProfessor']."'",'inner');
    $this->db->join('aluno', 'aluno.login = nota.loginAluno','inner');
+   $this->db->order_by("aluno.nome, avaliacao.nome", "asc");
    return $this->db->get();
   }
   

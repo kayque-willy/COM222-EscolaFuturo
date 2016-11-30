@@ -16,16 +16,15 @@
 </head>
 
 <body>
-	<?php var_dump($this->db->last_query()); break; ?>
-	
+	<?php var_dump($notas[0]); ?>
 	
 	<!-- Sidebar -->
 	<div id="wrapper">
 		<div class="overlay"></div>
 
-	  <!--Sidebar-->
+	    <!--Sidebar-->
 		<?php $this->load->view('layout/sidebar'); ?>
-	  <!--Sidebar-->
+	    <!--Sidebar-->
 		<!-- /#sidebar-wrapper -->
 
 		<!-- Page Content -->
@@ -40,9 +39,9 @@
 			<div class="container">
 				<div class="row">
 				 <h1 class="col-lg-8 col-lg-offset-2 page-header text-center">
-					 Lista de avaliações por turma
+					 Lista de notas por turma
 					</h1>
-					<h3 class="col-lg-8 col-lg-offset-2 page-header text-center">Clique nas turmas abaixo para visualizar as suas avaliações</h3>
+					<h3 class="col-lg-8 col-lg-offset-2 page-header text-center">Clique nas turmas abaixo para visualizar as notas dos alunos</h3>
 					<!--mensagem-->
 		            <?php if (isset($sucesso)){  ?>
 		            <div class="col-lg-8 col-lg-offset-2 alert alert-success text-center">
@@ -66,7 +65,7 @@
 					<!--Lista de questões -->
 					<div class="col-lg-8 col-lg-offset-2">
 						<div class="accordion">
-							<?php $i = 0; foreach ($avaliacoes as $avaliacao) { $i ++; ?>
+							<?php $i = 0; foreach ($notas as $nota) { $i ++; ?>
 								<div class="accordion-group">
 									<div class="accordion-heading">
 										<table class="table table-striped table-condensed">
@@ -76,7 +75,7 @@
 													<b>
 													<a class="accordion-toggle" style="decoration:none;" data-toggle="collapse" href="#tab<?php echo $i?>" >
 														<h4 class="text-center">
-															[<?php echo $avaliacao['turma']->idDisciplina ?>] - <?php echo $avaliacao['turma']->id ?>
+															[<?php echo $nota['turma']->idDisciplina ?>] - <?php echo $nota['turma']->id ?>
 														</h4>
 													</a>
 													</b>
@@ -85,35 +84,41 @@
 										</tbody>
 										</table>
 									</div>
-									<div id="tab<?php echo $i?>" class="accordion-body collapse  <?php if($avaliacao['turma']->id == $idTurma and $avaliacao['turma']->idDisciplina==$idDisciplina) echo 'in'; ?>">
-										<div class="text-center">
-												<a class="btn btn-sm btn-success" href="<?php echo base_url('avaliacao/cadastrarAvaliacao')."?idTurma=".$avaliacao['turma']->id."&loginProfessor=".$avaliacao['turma']->loginProfessor."&idDisciplina=".$avaliacao['turma']->idDisciplina ?>">Adicionar avaliação</a>
-										</div>
+									<div id="tab<?php echo $i?>" class="accordion-body collapse">
 										<div class="accordion-inner">
-											<?php if(!empty($avaliacao['avaliacoes'])){ ?>
+											<?php if(!empty($nota['avaliacoes'])){ ?>
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th>Avaliações desta disciplina</th>
-															<th class="text-center">Ação</th>
+															<th>Aluno</th>
 														</tr>
 													</thead>
 													<tbody>
-														<?php foreach($avaliacao['avaliacoes'] as $aval) {  ?>
-														<tr>
-															<td>
-																<?php echo $aval->nome  ?>
-															</td>
-															<td class="text-center">
-																<a class="btn btn-xs btn-info" href="<?php echo base_url('avaliacao/editarAvaliacao/')."/".$aval->id ?>">Editar</a> 
-																<a class="btn btn-xs btn-danger" href="<?php echo base_url('avaliacao/excluirAvaliacao/')."/".$aval->id ?>">Excluir</a>
-															</td>
-														</tr>
+													<tr>
+														<ul class="list-group">
+													<?php 
+													$aluno='';
+													foreach($nota['notas'] as $notaAluno) { ?>
+													
+														<?php 
+														if($aluno!=$notaAluno->nomeAluno){ 
+															$aluno = $notaAluno->nomeAluno; ?>
+
+																<li class="list-group-item list-group-item-info"><b><?php echo $notaAluno->nomeAluno  ?></b></li>
+														
 														<?php } ?>
+														<?php 
+														if($aluno==$notaAluno->nomeAluno){ ?>
+																<li class="list-group-item"><b><?php echo $notaAluno->nomeAvaliacao.':</b> '.$notaAluno->nota  ?></li>
+														<?php } ?>
+														
+													<?php }?>
+														</ul>
+													</tr>
 													</tbody>
 												</table>
 											<?php }else{ ?>
-												<h4 class="alert alert-info text-center">Nenhuma avaliação cadastrada para esta disciplina</h4>
+												<h4 class="alert alert-info text-center">Nenhuma nota para esta disciplina</h4>
 											<?php } ?>
 										</div>
 									</div>
