@@ -25,6 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $config['base_url'] = 'https://projeto-com222-kayquewilly.c9users.io/';
 //$config['base_url'] = 'http://projeto-COM222-kayque-willy260077.codeanyapp.com/';
+//$config['base_url'] = 'http://localhost/projeto-com222/';
 
 /*
 |--------------------------------------------------------------------------

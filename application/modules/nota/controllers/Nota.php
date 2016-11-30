@@ -48,8 +48,6 @@ class Nota extends CI_Controller {
 			$data['notas'][] = $notas;
 		}
 			
-		var_dump($this->db->last_query());	
-			
 		//Carrega a view 
 		$this->load->view('listarNota', $data);
 		

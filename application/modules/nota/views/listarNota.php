@@ -16,8 +16,7 @@
 </head>
 
 <body>
-	<?php var_dump($notas); ?>
-	
+
 	<!-- Sidebar -->
 	<div id="wrapper">
 		<div class="overlay"></div>
