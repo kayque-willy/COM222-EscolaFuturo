@@ -29,6 +29,10 @@ class Nota extends CI_Controller {
 			$filtro['idDisciplina'] = $turma->idDisciplina;
 			$filtro['loginProfessor'] = $turma->loginProfessor;
 			
+			//Consulta a média da turma
+			$consulta = new Turma_model();
+			$notas['media']= $consulta->media($filtro)->result();
+			
 			//Consulta as avaliações por turma
 			$consulta = new Avaliacao_model();
 		

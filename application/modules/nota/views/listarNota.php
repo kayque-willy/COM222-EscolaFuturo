@@ -16,7 +16,7 @@
 </head>
 
 <body>
-	<?php var_dump($notas[0]); ?>
+	<?php var_dump($notas); ?>
 	
 	<!-- Sidebar -->
 	<div id="wrapper">
@@ -75,7 +75,7 @@
 													<b>
 													<a class="accordion-toggle" style="decoration:none;" data-toggle="collapse" href="#tab<?php echo $i?>" >
 														<h4 class="text-center">
-															[<?php echo $nota['turma']->idDisciplina ?>] - <?php echo $nota['turma']->id ?>
+															[<?php echo $nota['turma']->idDisciplina ?>] - <?php echo $nota['turma']->id ?> - Média: <?php echo $nota['media'][0]->media ?>
 														</h4>
 													</a>
 													</b>
