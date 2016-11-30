@@ -98,21 +98,36 @@
 														<ul class="list-group">
 													<?php 
 													$aluno='';
+													$media=0;
+													$cont=0;
 													foreach($nota['notas'] as $notaAluno) { ?>
-													
 														<?php 
-														if($aluno!=$notaAluno->nomeAluno){ 
-															$aluno = $notaAluno->nomeAluno; ?>
-
+														if($aluno!=$notaAluno->nomeAluno){	?>
+															<?php if ($cont!=0){ ?> 
+																<?php if (floatval($media/$cont)>=6){ ?> 
+																	<li class="list-group-item list-group-item-success"><b>Média: <?php echo floatval($media/$cont) ?></b> (Aprovado)</li><hr>
+																<?php }else{ ?> 
+																	<li class="list-group-item list-group-item-danger"><b>Média: <?php echo floatval($media/$cont) ?></b> (Reprovado)</li><hr>
+																<?php } ?> 
+															<?php } ?> 
+														<?php 
+															$aluno = $notaAluno->nomeAluno; 
+															$cont=0;
+															$media=0;?>
 																<li class="list-group-item list-group-item-info"><b><?php echo $notaAluno->nomeAluno  ?></b></li>
-														
 														<?php } ?>
 														<?php 
-														if($aluno==$notaAluno->nomeAluno){ ?>
+														if($aluno==$notaAluno->nomeAluno){ 
+															$cont++;
+															$media+= (float) $notaAluno->nota?>
 																<li class="list-group-item"><b><?php echo $notaAluno->nomeAvaliacao.':</b> '.$notaAluno->nota  ?></li>
 														<?php } ?>
-														
 													<?php }?>
+														<?php if (floatval($media/$cont)>=6){ ?> 
+															<li class="list-group-item list-group-item-success"><b>Media: <?php echo floatval($media/$cont) ?></b> (Aprovado)</li><hr>
+														<?php }else{ ?> 
+															<li class="list-group-item list-group-item-danger"><b>Média: <?php echo floatval($media/$cont) ?></b> (Reprovado)</li><hr>
+														<?php } ?> 
 														</ul>
 													</tr>
 													</tbody>
