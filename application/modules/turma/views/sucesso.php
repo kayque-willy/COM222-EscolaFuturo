@@ -46,6 +46,10 @@
 
 	</div>
 	<!-- /#sidebar-wrapper -->
+	
+	<!--Footer-->
+	<?php $this->load->view('layout/footer'); ?>
+	<!--Footer-->
 
 </body>
 

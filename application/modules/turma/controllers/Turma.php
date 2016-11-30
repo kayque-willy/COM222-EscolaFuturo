@@ -6,9 +6,39 @@ class Turma extends CI_Controller {
 	# ------------ Visualizar ----------
 	
 	#Index do controller
-	public function index() {
+	public function index($result='') {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or ($_SESSION['tipoUsuario']!='admin')) redirect(base_url().'home', 'refresh');
+		
+		//Mensagem de resultado de alguma operação
+		if(isset($result)){
+			switch ($result){
+				case 'cad_sucesso': 
+					$data['sucesso']=true;
+					$data['msg'] = 'Turma cadastrada com sucesso!';
+					break;
+				case 'cad_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao cadastrar a Turma!';
+					break;
+				case 'alt_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Turma atualizada com sucesso!';
+					break;
+				case 'alt_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao atualizar a Turma!';
+					break;
+				case 'exc_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Turma excluida com sucesso!';
+					break;
+				case 'exc_falha':
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao remover a Turma!';
+					break;
+			}
+		}
 		
 		$this->load->model('Turma_model');
 		$this->load->model('Professor_model');
@@ -44,7 +74,7 @@ class Turma extends CI_Controller {
 	 }
 	
 	#Lista as disciplinas
-	public function disciplina() {
+	public function disciplina($result='') {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or ($_SESSION['tipoUsuario']!='admin')) redirect(base_url().'home', 'refresh');
 		
@@ -56,7 +86,7 @@ class Turma extends CI_Controller {
 	 }
 	
 	#Lista os professores
-	public function professor() {
+	public function professor($result='') {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or ($_SESSION['tipoUsuario']!='admin')) redirect(base_url().'home', 'refresh');
 		
@@ -68,16 +98,47 @@ class Turma extends CI_Controller {
 	 }
 	
 	#Lista os alunos
-	public function aluno() {
+	public function aluno($result='') {
 		//Restrição de acesso
 		if(!isset($_SESSION['tipoUsuario']) or ($_SESSION['tipoUsuario']!='admin')) redirect(base_url().'home', 'refresh');
+		
+		//Mensagem de resultado de alguma operação
+		if(isset($result)){
+			switch ($result){
+				case 'cad_sucesso': 
+					$data['sucesso']=true;
+					$data['msg'] = 'Turma cadastrada com sucesso!';
+					break;
+				case 'cad_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao cadastrar a Turma!';
+					break;
+				case 'alt_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Turma atualizada com sucesso!';
+					break;
+				case 'alt_falha': 
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao atualizar a Turma!';
+					break;
+				case 'exc_sucesso':
+					$data['sucesso']=true;
+					$data['msg'] = 'Turma excluida com sucesso!';
+					break;
+				case 'exc_falha':
+					$data['falha']=true;
+					$data['msg'] = 'Falha ao remover a Turma!';
+					break;
+			}
+		}
+		
 		
 		 $this->load->model('Aluno_model');
 		 $consulta = new Aluno_model();
 		 $alunos = $consulta->select($filtro = '');
 		 $data['alunos'] = $alunos->result_array();
 		 $data['retorno'] = '';
-	   $this->load->view('turma/cadastroAluno', $data);
+		 $this->load->view('turma/cadastroAluno', $data);
 	 }
 	
 	# ------------ Cadastrar ----------
@@ -201,15 +262,14 @@ class Turma extends CI_Controller {
 						$aluno = new Turma_aluno_model($a, $turma, $disciplina, $professor);
 						$aluno->insert();
 					}
-
-					$this->load->view('turma/sucesso');
+					redirect(base_url('turma/index/cad_sucesso'));
 				}else{
 					//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-					$this->load->view('turma/falha');
+					redirect(base_url('turma/index/cad_falha'));
 				}
 			}else{
 					//Se a operação não for bem sucedida, redireciona a consulta com mensagem de falha
-					$this->load->view('turma/falha');
+					redirect(base_url('turma/index/cad_falha'));
 			}
 		}
 	}
@@ -234,7 +294,8 @@ class Turma extends CI_Controller {
 			}
 		}
 	}
-		#Excluir Professor
+	
+	#Excluir Professor
 	public function excluirProfessor(){
 		if (!empty($_GET['login'])){
 			$this->load->model('Professor_model');
@@ -253,7 +314,7 @@ class Turma extends CI_Controller {
 		}
 	}
 	
-		#Excluir Disciplina
+	#Excluir Disciplina
 	public function excluirDisciplina(){
 		if (!empty($_GET['id'])){
 			$this->load->model('Disciplina_model');
@@ -272,14 +333,14 @@ class Turma extends CI_Controller {
 		}
 	}
 	
-			#Excluir Turma
+	#Excluir Turma
 	public function excluirTurma(){
 		if (!empty($_GET['id']) && !empty($_GET['disciplina']) && !empty($_GET['professor'])){
 			$this->load->model('Turma_model');
 			$turma = new Turma_model($_GET['id'],$_GET['professor'],$_GET['disciplina']);
 			
 			if($turma->remove()){
-				$this->index();
+				redirect(base_url('turma/index/exc_sucesso'));
 			}else{
 				 $this->load->model('Turma_model');
 				 $this->load->model('Turma_aluno_model');
@@ -304,7 +365,7 @@ class Turma extends CI_Controller {
 	
 	# ------------ Editar ----------
 	
-	#Cria um nova Disciplina
+	#Atualiza um Disciplina
 	public function atualizarDisciplina(){
 		
 		//Restrição de acesso
@@ -334,7 +395,7 @@ class Turma extends CI_Controller {
 		
 	}
 	
-	#Cria um nova Professor
+	#Atualiza um Professor
 	public function atualizarProfessor(){
 		
 		//Restrição de acesso
@@ -365,7 +426,7 @@ class Turma extends CI_Controller {
 		
 	}
 	
-	#Cria um nova Aluno
+	#Atualiza um Aluno
 	public function atualizarAluno(){
 		
 		//Restrição de acesso
@@ -396,7 +457,7 @@ class Turma extends CI_Controller {
 		
 	}
 	
-	#Cria um nova Turma
+	#Atualiza um Turma
 	public function atualizarTurma(){
 						
 		if(!empty($_POST)){
@@ -426,8 +487,7 @@ class Turma extends CI_Controller {
 						$aluno = new Turma_aluno_model($a, $turma, $disciplina, $professor);
 						$aluno->insert();
 				 }
-
-					$this->load->view('sucesso');
+				 redirect(base_url('turma/index/cad_sucesso'));
 			}
 		}
 	}

@@ -34,10 +34,29 @@
             </button>
 			<div class="container">
 				<div class="row">
-
+					<!--mensagem-->
+		            <?php if (isset($sucesso)){  ?>
+		            <div class="col-lg-8 col-lg-offset-2 alert alert-success text-center">
+		                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		                <strong>SUCESSO!</strong>
+		                <p>
+		                    <?php echo $msg; ?>
+		                </p>
+		            </div>
+		            <?php } ?>
+		            <?php if (isset($falha)){ ?>
+		            <div class="col-lg-8 col-lg-offset-2 alert alert-danger text-center">
+		                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		                <strong>FALHA!</strong>
+		                <p>
+		                    <?php echo $msg; ?>
+		                </p>
+		            </div>
+		            <?php } ?>
+		            <!--mensagem-->
 					<div class="col-lg-8 col-lg-offset-2">
 						<h1>Cadastro de Turmas</h1>
-						<form action="turma/atualizarTurma" method="post">
+						<form action="<?php echo base_url('turma/atualizarTurma') ?>" method="post">
 							<div class="form-group">
 								<label for="id">Nome da Turma:</label>
 								<input type="text" disabled="true" value="<?php echo $turma[0]['id']?>" class="form-control" id="id">
