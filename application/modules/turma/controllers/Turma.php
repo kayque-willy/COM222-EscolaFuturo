@@ -125,7 +125,7 @@ class Turma extends CI_Controller {
 			switch ($result){
 				case 'cad_sucesso': 
 					$data['sucesso']=true;
-					$data['msg'] = 'Professor cadastrada com sucesso!';
+					$data['msg'] = 'Professor cadastrado com sucesso!';
 					break;
 				case 'cad_falha': 
 					$data['falha']=true;
@@ -133,7 +133,7 @@ class Turma extends CI_Controller {
 					break;
 				case 'alt_sucesso':
 					$data['sucesso']=true;
-					$data['msg'] = 'Professor atualizada com sucesso!';
+					$data['msg'] = 'Professor atualizado com sucesso!';
 					break;
 				case 'alt_falha': 
 					$data['falha']=true;
@@ -141,7 +141,7 @@ class Turma extends CI_Controller {
 					break;
 				case 'exc_sucesso':
 					$data['sucesso']=true;
-					$data['msg'] = 'Professor excluida com sucesso!';
+					$data['msg'] = 'Professor excluido com sucesso!';
 					break;
 				case 'exc_falha':
 					$data['falha']=true;
@@ -169,7 +169,7 @@ class Turma extends CI_Controller {
 			switch ($result){
 				case 'cad_sucesso': 
 					$data['sucesso']=true;
-					$data['msg'] = 'Aluno cadastrada com sucesso!';
+					$data['msg'] = 'Aluno cadastrado com sucesso!';
 					break;
 				case 'cad_falha': 
 					$data['falha']=true;
@@ -177,7 +177,7 @@ class Turma extends CI_Controller {
 					break;
 				case 'alt_sucesso':
 					$data['sucesso']=true;
-					$data['msg'] = 'Aluno atualizada com sucesso!';
+					$data['msg'] = 'Aluno atualizado com sucesso!';
 					break;
 				case 'alt_falha': 
 					$data['falha']=true;
@@ -185,7 +185,7 @@ class Turma extends CI_Controller {
 					break;
 				case 'exc_sucesso':
 					$data['sucesso']=true;
-					$data['msg'] = 'Aluno excluida com sucesso!';
+					$data['msg'] = 'Aluno excluido com sucesso!';
 					break;
 				case 'exc_falha':
 					$data['falha']=true;

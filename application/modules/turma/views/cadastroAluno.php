@@ -91,7 +91,7 @@
 								<tr>
 									<td><?php echo $row['nome']?></td>
 									<td><?php echo $row['login']?></td>
-									<td><a href="<?php echo base_url('turma/editarAluno?login=').$row['login'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirAluno?login=').$row['login'] ?>">Excluir</a>, <a href="<?php echo base_url('turma/historicoAluno?login=').$row['login'] ?>">Histórico</a></td>
+									<td><a href="<?php echo base_url('turma/editarAluno?login=').$row['login'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirAluno?login=').$row['login'] ?>">Excluir</a></td>
 								</tr>
 								<?php } ?>
 							</tbody>

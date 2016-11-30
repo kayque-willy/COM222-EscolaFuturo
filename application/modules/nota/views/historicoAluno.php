@@ -39,10 +39,8 @@
 					<div class="col-lg-8 col-lg-offset-2">
 						<h1>Histórico do Aluno</h1>
 					</div>
+					
 					<div class="col-lg-8 col-lg-offset-2">
-						<?php if (!empty($_GET['login'])){ ?>
-							<h1 style="color:red;"><?php echo $retorno ?></h1>
-						<?php } ?>
 						<table class="table table-striped">
 							<thead>
 								<tr>

@@ -59,11 +59,11 @@
 						<form action="<?php echo base_url('turma/cadastrarTurma') ?>" method="post">
 							<div class="form-group">
 								<label for="id">Nome da Turma:</label>
-								<input type="text" class="form-control" id="id" name="id">
+								<input required type="text" class="form-control" id="id" name="id">
 							</div>
 							<div class="form-group">
 								<label for="idDisciplina">Disciplina:</label>
-								<select class="form-control" id="idDisciplina" name="idDisciplina">
+								<select required class="form-control" id="idDisciplina" name="idDisciplina">
        								<option  disabled="disabled" selected='selected'>Selecione</option>
 									<?php foreach ($disciplinas as $row) { ?>
         								<option value="<?php echo $row['id'] ?>"><?php echo $row['id'] ?></option>
@@ -72,7 +72,7 @@
 							</div>
 							<div class="form-group">
 								<label for="loginProfessor">Professor:</label>
-								<select class="form-control" id="loginProfessor" name="loginProfessor">
+								<select required class="form-control" id="loginProfessor" name="loginProfessor">
        					<option disabled="disabled" selected='selected'>Selecione</option>
 									<?php foreach ($professores as $row) { ?>
         								<option value="<?php echo $row['login'] ?>"><?php echo $row['nome'] ?></option>
@@ -81,7 +81,7 @@
 							</div>
 							<div class="form-group">
 								<label for="loginAluno">Alunos:</label>
-								<select multiple class="form-control" id="loginAluno" name="loginAluno[]">
+								<select required multiple class="form-control" id="loginAluno" name="loginAluno[]">
        					<option disabled="disabled" selected='selected'>Selecione</option>
 									<?php foreach ($alunos as $row) { ?>
         								<option value="<?php echo $row['login'] ?>"><?php echo $row['nome'] ?></option>
