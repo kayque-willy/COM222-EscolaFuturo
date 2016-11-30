@@ -103,17 +103,30 @@
 																	<a class="btn btn-md btn-info" href="<?php echo base_url('avaliacao/fazerAvaliacao/')."/".$aval->id ?>">Fazer avaliação</a> 
 																<?php }else{ ?>
 																	<?php if(floatval($aval->nota)>=6){ ?>
-																		<p class="alert alert-success">Nota: <?php echo $aval->nota ?> - Aprovado</p>
+																		<p class="alert alert-success">Nota: <?php echo $aval->nota ?></p>
 																	<?php }else{ ?>
-																		<p class="alert alert-danger">Nota: <?php echo $aval->nota ?> - Reprovado</p>
+																		<p class="alert alert-danger">Nota: <?php echo $aval->nota ?></p>
 																	<?php } ?>
 																
 																<?php } ?>
 															</td>
 														</tr>
 														<?php } ?>
+														<tr>
+															<td><b>Media</b></td>	
+															<td class="text-center">
+																<?php if($avaliacao['media']>=6){ ?>
+																<p class="alert alert-success">Nota: <?php echo $aval->nota ?> - Aprovado</p>
+																<?php }else if(($avaliacao['media']!=null) and ($avaliacao['media']<6)){ ?>
+																	<p class="alert alert-danger">Nota: <?php echo $aval->nota ?> - Reprovado</p>
+																<?php }else if($avaliacao['media']==null){ ?>
+																	<p class="alert alert-info">Faça todas as avaliações para calcular sua média</p>
+																<?php } ?>
+															</td>
+														</tr>
 													</tbody>
 												</table>
+												
 											<?php }else{ ?>
 												<h4 class="alert alert-info text-center">Nenhuma avaliação cadastrada para esta disciplina</h4>
 											<?php } ?>

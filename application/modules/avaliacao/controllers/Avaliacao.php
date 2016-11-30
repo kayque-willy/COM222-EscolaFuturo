@@ -460,6 +460,24 @@ class Avaliacao extends CI_Controller {
 			$avaliacoes['turma'] = $turma;
 			$avaliacoes['avaliacoes'] = $consulta->listar_provas($filtro)->result();
 			
+			//Calcula a media
+			$cont=0;
+			$media=0;
+			foreach ($avaliacoes['avaliacoes'] as $avaliacao){
+				//Se a nota existir, soma-a para a calcular a media
+				if($avaliacao->nota!=null){
+					$cont++;
+					$media += (float) $avaliacao->nota;
+				}	
+			}
+			//Se o aluno fez todas as avaliações, adiciona a media, se não coloca a media como null
+			//o cont conta a quantidade de avaliações que o aluno fez e compara com o total de avaliações
+			if($cont==sizeof($avaliacoes['avaliacoes']))
+				$media = $media/sizeof($avaliacoes['avaliacoes']);
+			else 
+				$media = null;
+		
+			$avaliacoes['media']=$media;
 			$data['avaliacoes'][] = $avaliacoes;
 		}
 		
