@@ -76,7 +76,7 @@ class Professor_model extends CI_Model{
    if(!empty($filtro['loginProfessor'])) $this->db->where('avaliacao.loginProfessor', $filtro['loginProfessor']);
     
    //Consultar inner join
-   $this->db->select('avaliacao.idTurma, avaliacao.idDisciplina, avaliacao.nome as nomeAvaliacao, nota.loginAluno, nota.idAvaliacao, nota.nota, aluno.nome as nomeAluno');    
+   $this->db->select('avaliacao.nome as nomeAvaliacao, nota.loginAluno, nota.idAvaliacao, nota.nota, aluno.nome as nomeAluno');    
    $this->db->from('avaliacao');
    $this->db->join('nota', 'avaliacao.id = nota.idAvaliacao','inner');
    $this->db->join('aluno', 'aluno.login = nota.loginAluno','inner');

@@ -44,17 +44,19 @@
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th>NOME</th>
-									<th>LOGIN</th>
-									<th>AÇÕES</th>
+									<th>DISCIPLINA</th>
+									<th>TURMA</th>
+									<th>PROFESSOR</th>
+									<th>MÉDIA</th>
 								</tr>
 							</thead>
 							<tbody>
-								<?php foreach ($alunos as $row) { ?>
+								<?php foreach ($notas as $row) { ?>
 								<tr>
-									<td><?php echo $row['nome']?></td>
-									<td><?php echo $row['login']?></td>
-									<td><a href="<?php echo base_url('turma/editarAluno?login=').$row['login'] ?>">Editar</a>, <a href="<?php echo base_url('turma/excluirAluno?login=').$row['login'] ?>">Excluir</a></td>
+									<td><?php echo $row['disciplina']?></td>
+									<td><?php echo $row['turma']?></td>
+									<td><?php echo $row['professor']?></td>
+									<td><b style="color: <?php ((float)$row['media'] >= 6.0) ? print 'green' : print 'red' ?>"><?php echo number_format((float)$row['media'], 2, ',', '')?></b></td>
 								</tr>
 								<?php } ?>
 							</tbody>

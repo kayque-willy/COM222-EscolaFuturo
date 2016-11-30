@@ -120,7 +120,7 @@ class Aluno_model extends CI_Model{
     
     //Iner join com Nota, Avaliação de Disciplina
     //Consultar inner join
-    $this->db->select('avg(nota.nota) as media, nota.loginAluno, avaliacao.idDisciplina ');    
+    $this->db->select('avg(nota.nota) as media, nota.loginAluno as aluno, avaliacao.idDisciplina as disciplina, avaliacao.idTurma as turma, avaliacao.loginProfessor as professor');    
     $this->db->from('nota');
     
     $this->db->group_by('avaliacao.idDisciplina'); 

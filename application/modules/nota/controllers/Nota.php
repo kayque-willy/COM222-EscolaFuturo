@@ -19,22 +19,30 @@ class Nota extends CI_Controller {
 		$consulta = new Turma_model();
 		$filtro['loginProfessor']=$_SESSION['login'];
 		$turmas=$consulta->select($filtro)->result();
-			
-		//Consulta as notas de cada turma
+		
 		$data['notas'] = [];
 		foreach($turmas as $turma){
-			$consulta = new Professor_model();
+			//Adiciona a turma
+			$notas['turma'] = $turma;
+			
 			$filtro['idTurma'] = $turma->id;
 			$filtro['idDisciplina'] = $turma->idDisciplina;
 			$filtro['loginProfessor'] = $turma->loginProfessor;
+			
+			//Consulta as avaliações por turma
+			$consulta = new Avaliacao_model();
+		
+			//Adiciona as avaliaçõse e a turma no vetor
+			$notas['avaliacoes'] = $consulta->select($filtro)->result();
 				
+			//Consulta as notas de cada turma
+			$consulta = new Professor_model();
+			
 			//Adiciona as notas e a turma no vetor
-			$notas['turma'] = $turma;
+		
 			$notas['notas'] = $consulta->listar_notas($filtro)->result();
 			$data['notas'][] = $notas;
 		}
-			
-		//var_dump($data['notas'][0]);
 			
 		//Carrega a view 
 		$this->load->view('listarNota', $data);
@@ -43,29 +51,17 @@ class Nota extends CI_Controller {
 	
 	//USA ESSE METODO DIÓGENES
 	public function historico(){
-		
-			
+		//Tem um método na model aluno que retorna o histórico
+		$this->load->model('turma/aluno_model');
 		if ($_SESSION['tipoUsuario'] === 'aluno'){
-			$consulta = new Nota_model();
-			$filtro['login']=$_SESSION['login'];
-			$turmas=$consulta->select($filtro)->result();
-			
-			//Consulta as notas de cada turma
-			$data['notas'] = [];
-			foreach($turmas as $turma){
-				$consulta = new Professor_model();
-				$filtro['idTurma'] = $turma->id;
-				$filtro['idDisciplina'] = $turma->idDisciplina;
-				$filtro['loginProfessor'] = $turma->loginProfessor;
-				
-				//Adiciona as notas e a turma no vetor
-				$notas['turma'] = $turma;
-				$notas['notas'] = $consulta->listar_notas($filtro)->result();
-				$data['notas'][] = $notas;
-			}
+			$consulta = new Aluno_model();
+			$filtro['loginAluno']=$_SESSION['login'];
+			$notas=$consulta->historico($filtro)->result_array();
+		
+			$data['notas'] = $notas;
 			
 			//Carrega a view 
-			$this->load->view('listarNota', $data);
+			$this->load->view('historicoAluno', $data);
 			}
 		
 	}

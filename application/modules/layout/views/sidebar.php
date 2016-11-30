@@ -41,7 +41,7 @@
 						<a href="<?php echo base_url('avaliacao/listarAvaliacoes') ?>">Consultar avaliações</a>
 					</li>
 					<li>
-						<a href="<?php echo base_url('nota') ?>">Consultar histórico</a>
+						<a href="<?php echo base_url('nota/historico') ?>">Consultar histórico</a>
 					</li>
 				<?php } ?>
         		<li class="divider"></li>
